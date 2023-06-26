@@ -1,58 +1,36 @@
-import os
 import sys
 from argparse import ArgumentParser
 from pathlib import Path
 
 from cookiecutter.main import cookiecutter
 
+here = Path(__file__).parent
+TEMPLATE_DIR = here / "templates"
 
-def init(**kwargs):
 
-    repo = get_repository(os.getcwd())
-    root = Path(repo.path)
+def available_templates():
+    return [path.name for path in TEMPLATE_DIR.iterdir() if path.is_dir()]
 
-    # Clean up existing installations if necessary.
-    tc_yml = root.joinpath(".taskcluster.yml")
-    if tc_yml.is_file():
-        if not options["force"]:
-            proceed = input(
-                "A Taskcluster setup already exists in this repository, "
-                "would you like to overwrite it? [y/N]: "
-            ).lower()
-            while proceed not in ("y", "yes", "n", "no"):
-                proceed = input(f"Invalid option '{proceed}'! Try again: ")
 
-            if proceed[0] == "n":
-                sys.exit(1)
+def command_new(name, template, **cookiecutter_args):
+    if template not in available_templates():
+        print(f"template '{template}' not found!")
+        return 1
 
-        tc_yml.unlink()
-        tg_dir = root.joinpath("taskcluster")
-        if tg_dir.is_dir():
-            shutil.rmtree(tg_dir)
+    if template != "base":
+        # The 'base' template will be generated first, and non-base templates
+        # then get merged into it. So unless the 'base' template was explicitly
+        # specified, ensure we don't error out when the project already exists.
+        cookiecutter_args.setdefault("overwrite_if_exists", False)
 
-    # Populate some defaults from the current repository.
-    context = {"project_name": root.name}
-
-    repo_url = repo.get_url()
-    if repo.tool == "git" and "github.com" in repo_url:
-        context["repo_host"] = "github"
-    elif repo.tool == "hg" and "hg.mozilla.org" in repo_url:
-        context["repo_host"] = "hgmo"
-    else:
-        raise RuntimeError(
-            "Repository not supported! Taskgraph currently only "
-            "supports repositories hosted on Github or hg.mozilla.org."
-        )
+    template = TEMPLATE_DIR / template
+    context = {"project_name": name}
 
     # Generate the project.
     cookiecutter(
-        options["template"],
-        checkout=taskgraph.__version__,
-        directory="template",
+        str(template),
         extra_context=context,
-        no_input=options["no_input"],
-        output_dir=root.parent,
-        overwrite_if_exists=True,
+        **cookiecutter_args,
     )
 
 
@@ -60,14 +38,26 @@ def run(args=sys.argv[1:]):
     parser = ArgumentParser()
     subparsers = parser.add_subparsers(help="sub-command help")
 
-    init_parser = subparsers.add_parser("init", help="init command help")
-    init_parser.
-    init_parser.set_defaults(func=init)
+    new_parser = subparsers.add_parser("new", help="new command help")
+    new_parser.add_argument(
+        "name",
+        nargs="?",
+        default=None,
+        help="Name of the project to create."
+    )
+    new_parser.add_argument(
+        "-t",
+        "--template",
+        default="python",
+        choices=available_templates(),
+        help="Project template to initialize.",
+    )
+    new_parser.set_defaults(func=command_new)
 
-    args = vars(parser.parse_args(args))
-    func = args.pop("func")
-    return func(args)
+    kwargs = vars(parser.parse_args(args))
+    func = kwargs.pop("func")
+    return func(**kwargs)
 
 
-if __name__ == 'main':
+if __name__ == "main":
     sys.exit(run())

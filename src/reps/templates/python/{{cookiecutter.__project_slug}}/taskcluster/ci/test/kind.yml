@@ -1,0 +1,44 @@
+{%- set pylist -%}
+{%- for i in range(cookiecutter._max_tox_python_version[1:]|int, cookiecutter.__min_tox_python_version[1:]|int - 1, -1) -%}
+3.{{i}}
+{%- if not loop.last %} {% endif -%}
+{%- endfor -%}
+{%- endset -%}
+---
+loader: taskgraph.loader.transform:loader
+
+transforms:
+    - taskgraph.transforms.job:transforms
+    - taskgraph.transforms.task:transforms
+
+task-defaults:
+    attributes:
+        retrigger: true
+    worker-type: t-linux
+    worker:
+        docker-image: {in-tree: python}
+        max-run-time: 3600
+    run:
+        using: run-task
+        cwd: '{checkout}'
+        cache-dotcache: true
+
+tasks:
+    unit:
+        description: "Run `unit tests` to validate the latest changes"
+        treeherder:
+            symbol: unit
+        attributes:
+            artifact_prefix: public
+        worker:
+            artifacts:
+                - type: file
+                  path: /builds/worker/artifacts/coverage.xml
+                  name: public/coverage.xml
+            env:
+                COVERAGE_REPORT_COMMAND: "coverage xml -o /builds/worker/artifacts/coverage.xml"
+                TOX_PARALLEL_NO_SPINNER: "1"
+        run:
+            command: >-
+                pyenv local {{pylist}} &&
+                tox --parallel

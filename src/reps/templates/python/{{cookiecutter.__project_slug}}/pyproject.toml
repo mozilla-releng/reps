@@ -1,0 +1,41 @@
+[tool.poetry]
+name = "{{cookiecutter.__project_slug}}"
+version = "0.1.0"
+description = "{{cookiecutter.short_description}}"
+authors = ["{{cookiecutter.author}}"]
+license = "MPL-2.0"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^{{cookiecutter.min_python_version}}"
+
+[tool.black]
+line-length = 88
+
+[tool.pytest.ini_options]
+xfail_strict = true
+
+[tool.coverage.run]
+parallel = true
+branch = true
+source = ["src/{{cookiecutter.__package_name}}/"]
+
+[tool.ruff]
+select = [
+    "E", "W",       # pycodestyle
+    "F",            # pyflakes
+    "I",            # isort
+    "PLC", "PLE",   # pylint
+    "UP",           # pyupgrade
+]
+ignore = [
+    "E501",  # let black handle line-length
+]
+target-version = "py{{cookiecutter.__min_tox_python_version}}"
+
+[tool.ruff.isort]
+known-first-party = ["{{cookiecutter.__package_name}}"]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
