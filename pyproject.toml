@@ -8,7 +8,10 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
+cookiecutter = "^2.1.1"
 
+[tool.poetry.scripts]
+reps = "reps.console:run"
 
 [build-system]
 requires = ["poetry-core"]
