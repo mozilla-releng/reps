@@ -10,23 +10,19 @@ This repository:
 ## Usage
 
 The `reps` tool can be used to bootstrap new projects that conform to this
-standard. It is recommended to install it with [pipx](https://github.com/pypa/pipx):
+standard. It is recommended to install and run it with
+[pipx](https://github.com/pypa/pipx) (so the most up to date version is always
+used):
 
 ```bash
-pipx install releng-project-standard
-```
-
-Then run:
-
-```bash
-reps new
+pipx run reps-new
 ```
 
 and fill out the prompts. By default, the `python` project template is used.
 You may optionally specify a different template to use with the `-t/--template` flag:
 
 ```bash
-reps new -t base
+pipx run reps-new -t base
 ```
 
 Available templates can be found in the

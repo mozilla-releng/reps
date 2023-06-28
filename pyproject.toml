@@ -1,10 +1,11 @@
 [tool.poetry]
-name = "releng-project-standard"
+name = "reps-new"
 version = "0.1.0"
 description = "Mozilla Release Engineering Project Standard"
 authors = ["Mozilla Release Engineering <release@mozilla.com>"]
 license = "MPL-2.0"
 readme = "README.md"
+packages = [{ include = "reps" }]
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -14,7 +15,7 @@ taskcluster-taskgraph = "^5.4.0"
 pyyaml = "^6.0"
 
 [tool.poetry.scripts]
-reps = "reps.console:run"
+reps-new = "reps.console:run"
 
 [build-system]
 requires = ["poetry-core"]

@@ -36,23 +36,20 @@ def command_new(name, template, **cookiecutter_args):
 
 def run(args=sys.argv[1:]):
     parser = ArgumentParser()
-    subparsers = parser.add_subparsers(help="sub-command help")
-
-    new_parser = subparsers.add_parser("new", help="new command help")
-    new_parser.add_argument(
+    parser.add_argument(
         "name",
         nargs="?",
         default=None,
         help="Name of the project to create."
     )
-    new_parser.add_argument(
+    parser.add_argument(
         "-t",
         "--template",
         default="python",
         choices=available_templates(),
         help="Project template to initialize.",
     )
-    new_parser.set_defaults(func=command_new)
+    parser.set_defaults(func=command_new)
 
     kwargs = vars(parser.parse_args(args))
     func = kwargs.pop("func")
