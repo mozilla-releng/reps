@@ -7,6 +7,12 @@ This repository:
 2. Implements a `reps` binary that can be used to bootstrap new projects based
    on the defined standard.
 
+## Project Standard
+
+Please see
+[STANDARD.md](https://github.com/mozilla-releng/reps/blob/main/STANDARD.md) for
+the REPS definition.
+
 ## Usage
 
 The `reps` tool can be used to bootstrap new projects that conform to this
