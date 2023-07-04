@@ -1,2 +1,6 @@
+import sys
+
+import {{cookiecutter.__package_name}}
+
 def test_{{cookiecutter.__package_name}}():
-    assert True
+    assert "{{cookiecutter.__package_name}}" in sys.modules
