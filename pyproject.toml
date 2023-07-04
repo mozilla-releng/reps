@@ -13,6 +13,7 @@ cookiecutter = "^2.1.1"
 pre-commit = "^3.3.3"
 taskcluster-taskgraph = "^5.4.0"
 pyyaml = "^6.0"
+pip-tools = "^6.14.0"
 
 [tool.poetry.scripts]
 reps-new = "reps.console:run"

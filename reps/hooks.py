@@ -118,6 +118,12 @@ def pre_commit_autoupdate(items):
     run(["pre-commit", "autoupdate"])
 
 
+@hook("post-gen-py")
+@hook("post-gen-base")
+def lock_taskgraph_requirements(items):
+    run(["pip-compile", "requirements.in", "--generate-hashes"], cwd="taskcluster")
+
+
 @hook("post-gen-base")
 def taskgraph_init(items):
     run(["taskgraph", "init"])
