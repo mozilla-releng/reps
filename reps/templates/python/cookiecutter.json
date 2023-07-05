@@ -6,12 +6,15 @@
     "author": "Mozilla Release Engineering <release@mozilla.com>",
     "github_slug": "mozilla-releng/{{cookiecutter.__project_slug}}",
     "__github_org": "{{cookiecutter.github_slug[:cookiecutter.github_slug.find('/')]}}",
+    "__github_project": "{{cookiecutter.github_slug[cookiecutter.github_slug.find('/'):]}}",
     "min_python_version": "3.7",
+    "_max_python_version": "3.11",
     "__min_tox_python_version": "{{cookiecutter.min_python_version.replace('.', '')}}",
-    "_max_tox_python_version": "311",
+    "__max_tox_python_version": "{{cookiecutter._max_python_version.replace('.', '')}}",
     "trust_domain": "mozilla",
-    "trust_project": "{{cookiecutter.__project_slug}}",
+    "trust_project": "{{cookiecutter.__github_project}}",
     "level": ["1", "3"],
+    "__secrets_path": "project/releng/{{cookiecutter.trust_domain}}/{{cookiecutter.trust_project}}/build/level-{{cookiecutter.level}}/ci",
     "_copy_without_render": [
         ".github/workflows/codeql-analysis.yml"
     ]
