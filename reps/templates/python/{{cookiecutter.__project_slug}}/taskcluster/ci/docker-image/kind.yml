@@ -13,9 +13,7 @@ transforms:
     - taskgraph.transforms.task:transforms
 
 tasks:
-    fetch:
-        symbol: I(fetch)
+    fetch: {}
     python:
-        symbol: I(py)
         args:
             PYENV_VERSIONS: "{{pylist}}"

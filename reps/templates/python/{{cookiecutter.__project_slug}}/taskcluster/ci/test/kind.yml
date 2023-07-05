@@ -14,7 +14,7 @@ transforms:
 task-defaults:
     attributes:
         retrigger: true
-    worker-type: t-linux
+    worker-type: linux
     worker:
         docker-image: {in-tree: python}
         max-run-time: 3600
@@ -26,8 +26,6 @@ task-defaults:
 tasks:
     unit:
         description: "Run `unit tests` to validate the latest changes"
-        treeherder:
-            symbol: unit
         attributes:
             artifact_prefix: public
         worker:

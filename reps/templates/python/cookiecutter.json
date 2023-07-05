@@ -10,7 +10,8 @@
     "__min_tox_python_version": "{{cookiecutter.min_python_version.replace('.', '')}}",
     "_max_tox_python_version": "311",
     "trust_domain": "mozilla",
-    "level": "1",
+    "trust_project": "{{cookiecutter.__project_slug}}",
+    "level": ["1", "3"],
     "_copy_without_render": [
         ".github/workflows/codeql-analysis.yml"
     ]

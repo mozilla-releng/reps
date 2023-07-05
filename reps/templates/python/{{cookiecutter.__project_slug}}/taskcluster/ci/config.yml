@@ -3,25 +3,20 @@ trust-domain: "{{cookiecutter.trust_domain}}"
 task-priority: low
 
 taskgraph:
-  cached-task-prefix: "{{cookiecutter.trust_domain}}.v2.{{cookiecutter.__project_slug}}"
+  cached-task-prefix: "{{cookiecutter.trust_domain}}.v2.{{cookiecutter.trust_project}}"
   repositories:
     {{cookiecutter.__package_name}}:
       name: "{{cookiecutter.project_name}}"
 
 workers:
   aliases:
-    b-linux:
-      provisioner: '{trust-domain}-{level}'
-      implementation: docker-worker
-      os: linux
-      worker-type: '{alias}-gcp'
     images:
       provisioner: '{trust-domain}-{level}'
       implementation: docker-worker
       os: linux
       worker-type: '{alias}-gcp'
-    t-linux-large:
+    linux:
       provisioner: '{trust-domain}-t'
       implementation: docker-worker
       os: linux
-      worker-type: '{alias}-gcp'
+      worker-type: 't-{alias}-large-gcp'
