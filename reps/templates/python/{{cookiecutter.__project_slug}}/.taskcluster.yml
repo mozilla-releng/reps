@@ -11,7 +11,6 @@ policy:
 tasks:
     - $let:
           trustDomain: "{{cookiecutter.trust_domain}}"
-          level: "{{cookiecutter.level}}"
           ownerEmail:
               $switch:
                   'tasks_for == "github-push"': '${event.pusher.email}'
@@ -80,6 +79,17 @@ tasks:
                   $if: 'head_ref[:11] == "refs/heads/"'
                   then: {$eval: 'head_ref[11:]'}
                   else: ${head_ref}
+              {%- if cookiecutter.level == "1" %}
+              level: 1
+              {% else %}
+              level:
+                  $if: >
+                      repoUrl == "https://github.com/{{cookiecutter.github_slug}}" && (
+                      tasks_for in [""cron", "action"] ||
+                      (tasks_for == "github-push" && head_branch == "refs/head/main"))
+                  then: {{cookiecutter.level}}
+                  else: 1
+              {%- endif %}
           in:
               $if: >
                   tasks_for in ["action", "cron", "github-push"]
