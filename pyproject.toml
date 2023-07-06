@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "reps-new"
-version = "0.1.0"
+version = "0.2.0"
 description = "Mozilla Release Engineering Project Standard"
 authors = ["Mozilla Release Engineering <release@mozilla.com>"]
 license = "MPL-2.0"
