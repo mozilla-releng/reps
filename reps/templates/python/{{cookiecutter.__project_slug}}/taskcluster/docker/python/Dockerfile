@@ -8,8 +8,7 @@ LABEL maintainer="Mozilla Release Engineering <release@mozilla.com>"
 # Add worker user
 RUN mkdir /builds && \
     useradd -d /builds/worker -s /bin/bash -m worker && \
-    mkdir /builds/worker/artifacts && \
-    chown worker:worker /builds/worker/artifacts
+    mkdir -p /builds/worker/artifacts
 
 # %include-run-task
 
@@ -34,6 +33,8 @@ RUN /builds/worker/pyenv-setup "$PYENV_VERSIONS"
 # %include taskcluster/scripts/poetry-setup
 ADD topsrcdir/taskcluster/scripts/poetry-setup /builds/worker/poetry-setup
 RUN /builds/worker/poetry-setup
+
+RUN chown -R worker:worker /builds/worker
 
 # Set a default command useful for debugging
 CMD ["/bin/bash", "--login"]
