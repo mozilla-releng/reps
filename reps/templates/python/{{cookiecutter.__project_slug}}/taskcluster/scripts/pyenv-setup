@@ -23,3 +23,4 @@ do
 done
 chmod 777 /builds/worker/.pyenv/shims
 pyenv rehash
+pyenv global ${1//,/ }
