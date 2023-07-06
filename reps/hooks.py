@@ -1,6 +1,7 @@
 import subprocess
 from collections import defaultdict
 from pathlib import Path
+import sys
 
 import yaml
 
@@ -20,13 +21,23 @@ def hook(name):
 
 def run_hooks(group, items):
     for hook_fn in HOOKS[group]:
-        print(f"running {group} hook '{hook_fn.__name__}'")
+        print(f"running {group} hook '{hook_fn.__name__}'.. ", end="")
+        sys.stdout.flush()
         hook_fn(items)
+        print("SUCCESS!")
 
 
 def run(cmd, **kwargs):
     kwargs.setdefault("check", True)
-    subprocess.run(cmd, **kwargs)
+    kwargs.setdefault("stdout", subprocess.PIPE)
+    kwargs.setdefault("stderr", subprocess.STDOUT)
+    try:
+        subprocess.run(cmd, **kwargs)
+    except subprocess.CalledProcessError as e:
+        print("+ command failed: {' '.join(cmd)}")
+        print(e.output)
+        raise
+
 
 
 @hook("pre-gen-py")
