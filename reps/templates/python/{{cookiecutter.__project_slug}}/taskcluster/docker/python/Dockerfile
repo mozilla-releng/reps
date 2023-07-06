@@ -31,5 +31,9 @@ ENV PYENV_ROOT=/builds/worker/.pyenv \
 ADD topsrcdir/taskcluster/scripts/pyenv-setup /builds/worker/pyenv-setup
 RUN /builds/worker/pyenv-setup "$PYENV_VERSIONS"
 
+# %include taskcluster/scripts/poetry-setup
+ADD topsrcdir/taskcluster/scripts/poetry-setup /builds/worker/poetry-setup
+RUN /builds/worker/poetry-setup
+
 # Set a default command useful for debugging
 CMD ["/bin/bash", "--login"]
