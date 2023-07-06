@@ -39,5 +39,5 @@ tasks:
         run:
             command: >-
                 pyenv local {{pylist}} &&
-                poetry install --with test &&
-                tox --parallel
+                poetry install --only test &&
+                poetry run tox --parallel
