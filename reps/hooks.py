@@ -32,10 +32,13 @@ def run(cmd, **kwargs):
 @hook("pre-gen-py")
 def base_init(items):
     """Generate the 'base' template first."""
+    if "_copy_without_render" in items:
+        del items["_copy_without_render"]
+
     command_new(
         items["__project_slug"],
         template="base",
-        default_config=items,
+        extra_context=items,
         no_input=True,
         output_dir=str(Path.cwd().parent),
         accept_hooks=False,

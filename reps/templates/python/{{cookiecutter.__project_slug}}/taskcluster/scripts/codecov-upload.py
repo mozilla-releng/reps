@@ -17,7 +17,9 @@ def fetch_secret(secret_name):
     return r.json()["secret"]
 
 
-token = fetch_secret("{{cookiecutter.__secrets_path}}")["codecov_api_token"]
+token = fetch_secret("{{cookiecutter.__secrets_path}}")[
+    "codecov_api_token"
+]
 uploader = FETCHES_DIR / "codecov"
 uploader.chmod(uploader.stat().st_mode | stat.S_IEXEC)
 subprocess.run(

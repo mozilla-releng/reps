@@ -24,12 +24,11 @@ def command_new(name, template, **cookiecutter_args):
         cookiecutter_args.setdefault("overwrite_if_exists", False)
 
     template = TEMPLATE_DIR / template
-    context = {"project_name": name}
+    cookiecutter_args.setdefault("extra_context", {}).setdefault("project_name", name)
 
     # Generate the project.
     cookiecutter(
         str(template),
-        extra_context=context,
         **cookiecutter_args,
     )
 
@@ -37,10 +36,7 @@ def command_new(name, template, **cookiecutter_args):
 def run(args=sys.argv[1:]):
     parser = ArgumentParser()
     parser.add_argument(
-        "name",
-        nargs="?",
-        default=None,
-        help="Name of the project to create."
+        "name", nargs="?", default=None, help="Name of the project to create."
     )
     parser.add_argument(
         "-t",
