@@ -107,7 +107,7 @@ def git_init(items):
             "remote",
             "add",
             "origin",
-            f"https://github.com/{items['github_slug']}",
+            f"git@github.com:{items['github_slug']}.git",
         ]
     )
 
