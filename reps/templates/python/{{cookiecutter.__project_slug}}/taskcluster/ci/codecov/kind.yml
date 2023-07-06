@@ -15,14 +15,14 @@ kind-dependencies:
 tasks:
     upload:
         description: "Upload coverage.xml to codecov.io"
-        worker-type: t-linux
+        worker-type: linux
         worker:
             docker-image: {in-tree: python}
             max-run-time: 600
             env:
                 MOZ_FETCHES_DIR: /builds/worker/fetches
         scopes:
-            - secrets:get:project/releng/{{cookiecutter.__project_slug}}/ci
+            - secrets:get:{{cookiecutter.__secrets_path}}
         dependencies:
             test: test-unit
         fetches:
