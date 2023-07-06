@@ -32,4 +32,4 @@ pipx run reps-new -t base
 ```
 
 Available templates can be found in the
-[templates directory](https://github.com/mozilla-releng/reps/tree/main/src/reps/templates).
+[templates directory](https://github.com/mozilla-releng/reps/tree/main/reps/templates).
