@@ -27,6 +27,9 @@ extend-exclude = """(\
   reps/templates)\
   """
 
+[tool.pytest.ini_options]
+testpaths = ["test"]
+
 [tool.ruff]
 exclude = ["reps/templates"]
 
