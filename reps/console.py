@@ -45,10 +45,19 @@ def run(args=sys.argv[1:]):
         choices=available_templates(),
         help="Project template to initialize.",
     )
+    parser.add_argument(
+        "--no-input",
+        default=False,
+        action="store_true",
+        help="Use defaults"
+    )
     parser.set_defaults(func=command_new)
 
     kwargs = vars(parser.parse_args(args))
     func = kwargs.pop("func")
+
+    if not kwargs["name"] and kwargs["no_input"]:
+        parser.error("must specify 'name' when --no-input is used!")
     return func(**kwargs)
 
 

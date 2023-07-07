@@ -3,6 +3,8 @@ from pathlib import Path
 import pytest
 from responses import RequestsMock
 
+from reps.console import run
+
 here = Path(__file__).parent
 
 
