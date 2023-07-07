@@ -1,0 +1,10 @@
+---
+extends: default
+
+rules:
+    document-end:
+        present: false
+    line-length: disable
+
+ignore: |
+  .tox

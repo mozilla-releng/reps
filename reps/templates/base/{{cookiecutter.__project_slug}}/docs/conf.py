@@ -30,7 +30,6 @@ author = "{{cookiecutter.author}}"
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.napoleon",
-    "sphinxarg.ext",
     "sphinxcontrib.mermaid",
 ]
 
