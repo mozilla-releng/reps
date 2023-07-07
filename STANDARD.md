@@ -245,7 +245,7 @@ repos:
           - tomli
 ```
 
-Be sure to run `pre-commit autoupdate` to pick up the latest verions of each
+Be sure to run `pre-commit autoupdate` to pick up the latest versions of each
 tool.
 
 [yamllint]: https://github.com/adrienverge/yamllint

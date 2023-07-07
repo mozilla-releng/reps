@@ -1,0 +1,36 @@
+---
+ci:
+    autofix_commit_msg: 'style: pre-commit.ci auto fixes [...]'
+    autoupdate_comit_msg: 'chore: pre-commit autoupdate'
+repos:
+    - hooks:
+          - id: trailing-whitespace
+          - id: end-of-file-fixer
+          - id: check-yaml
+          - id: check-added-large-files
+      repo: https://github.com/pre-commit/pre-commit-hooks
+      rev: v4.4.0
+    - hooks:
+          - entry: codespell
+            id: codespell
+      repo: https://github.com/codespell-project/codespell
+      rev: v2.2.5
+    - hooks:
+          - id: yamllint
+      repo: https://github.com/adrienverge/yamllint.git
+      rev: v1.32.0
+    - hooks:
+          - id: black
+      repo: https://github.com/psf/black
+      rev: 23.3.0
+    - hooks:
+          - args:
+                - --fix
+                - --exit-non-zero-on-fix
+            id: ruff
+      repo: https://github.com/charliermarsh/ruff-pre-commit
+      rev: v0.0.277
+exclude: |
+  (?x)^(
+    reps/templates
+  )

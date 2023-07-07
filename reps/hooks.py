@@ -1,7 +1,6 @@
 import subprocess
 from collections import defaultdict
 from pathlib import Path
-import sys
 
 import yaml
 from halo import Halo
@@ -37,7 +36,6 @@ def run(cmd, **kwargs):
         print("+ command failed: {' '.join(cmd)}")
         print(e.output)
         raise
-
 
 
 @hook("pre-gen-py")
@@ -141,5 +139,3 @@ def lock_taskgraph_requirements(items):
 @hook("post-gen-base")
 def taskgraph_init(items):
     run(["taskgraph", "init"])
-
-

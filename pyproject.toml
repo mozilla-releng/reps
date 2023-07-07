@@ -19,6 +19,17 @@ halo = "^0.0.31"
 [tool.poetry.scripts]
 reps-new = "reps.console:run"
 
+[tool.poetry.group.test.dependencies]
+pytest = "^7.4.0"
+
+[tool.black]
+extend-exclude = """(\
+  reps/templates)\
+  """
+
+[tool.ruff]
+exclude = ["reps/templates"]
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,13 @@
+---
+loader: taskgraph.loader.transform:loader
+
+transforms:
+    - taskgraph.transforms.docker_image:transforms
+    - taskgraph.transforms.cached_tasks:transforms
+    - taskgraph.transforms.task:transforms
+
+tasks:
+    fetch: {}
+    python:
+        args:
+            PYENV_VERSIONS: "3.11,3.10,3.9,3.8"
