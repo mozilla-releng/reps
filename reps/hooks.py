@@ -24,7 +24,7 @@ def run_hooks(group, items):
     for hook_fn in HOOKS[group]:
         with Halo(f"running {hook_fn.__name__}") as spinner:
             hook_fn(items)
-            spinner.succeed()
+            spinner.succeed(f"{hook_fn.__name__}")
 
 
 def run(cmd, **kwargs):
