@@ -4,6 +4,7 @@ from pathlib import Path
 import sys
 
 import yaml
+from halo import Halo
 
 from reps.console import command_new
 
@@ -21,10 +22,9 @@ def hook(name):
 
 def run_hooks(group, items):
     for hook_fn in HOOKS[group]:
-        print(f"running {group} hook '{hook_fn.__name__}'.. ", end="")
-        sys.stdout.flush()
-        hook_fn(items)
-        print("SUCCESS!")
+        with Halo(f"running {hook_fn.__name__}") as spinner:
+            hook_fn(items)
+            spinner.succeed()
 
 
 def run(cmd, **kwargs):
