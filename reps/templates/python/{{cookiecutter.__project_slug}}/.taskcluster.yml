@@ -81,7 +81,7 @@ tasks:
                   else: ${head_ref}
               {%- if cookiecutter.level == "1" %}
               level: 1
-              {% else %}
+              {%- else %}
               level:
                   $if: >
                       repoUrl == "https://github.com/{{cookiecutter.github_slug}}" && (
