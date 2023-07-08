@@ -46,10 +46,7 @@ def run(args=sys.argv[1:]):
         help="Project template to initialize.",
     )
     parser.add_argument(
-        "--no-input",
-        default=False,
-        action="store_true",
-        help="Use defaults"
+        "--no-input", default=False, action="store_true", help="Use defaults"
     )
     parser.set_defaults(func=command_new)
 
