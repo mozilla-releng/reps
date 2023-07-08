@@ -29,6 +29,9 @@ extend-exclude = """(\
   reps/templates)\
   """
 
+[tool.coverage.run]
+omit = ["reps/templates"]
+
 [tool.pytest.ini_options]
 testpaths = ["test"]
 
