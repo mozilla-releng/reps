@@ -21,6 +21,7 @@ reps-new = "reps.console:run"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^7.4.0"
+tox = "^4.6.4"
 
 [tool.black]
 extend-exclude = """(\
