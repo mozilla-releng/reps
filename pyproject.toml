@@ -23,6 +23,7 @@ reps-new = "reps.console:run"
 pytest = "^7.4.0"
 tox = "^4.6.4"
 coverage = {extras = ["toml"], version = "^7.2.7"}
+requests = "^2.31.0"
 
 [tool.black]
 extend-exclude = """(\
