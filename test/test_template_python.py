@@ -4,6 +4,7 @@ def test_generated_files(reps_new):
         ".codespell-ignore-words.txt",
         ".github/CODEOWNERS",
         ".github/workflows/codeql-analysis.yml",
+        ".gitignore",
         ".pre-commit-config.yaml",
         ".taskcluster.yml",
         ".yamllint.yml",
