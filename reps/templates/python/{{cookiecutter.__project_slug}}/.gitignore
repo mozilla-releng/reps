@@ -1,0 +1,33 @@
+# Editor
+*~
+*.dir-locals.el  # Emacs directory variable files.
+
+# Build directories
+build/
+dist/
+docs/_build/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Tool cache dirs
+.pytest_cache/
+.ruff_cache/
+.tox/
+
+# Pyenv
+.python-version
+
+# Coverage
+.coverage
+
+# Artifacts
+artifacts/
+
+#Idea
+.idea
+
+# MacOS specific
+.DS_Store
