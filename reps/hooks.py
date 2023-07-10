@@ -85,9 +85,6 @@ def merge_pre_commit(items):
     with open(".pre-commit-config.yaml", "w") as fh:
         yaml.dump(pre_commit_config, fh)
 
-    with open(".pre-commit-config.yaml", "r") as fh:
-        print(fh.read())
-
 
 @hook("post-gen-py")
 def add_poetry_dependencies(items):
