@@ -2,7 +2,7 @@ import subprocess
 from collections import defaultdict
 from pathlib import Path
 
-import yaml
+from ruamel.yaml import YAML
 from halo import Halo
 
 from reps.console import command_new
@@ -58,8 +58,10 @@ def base_init(items):
 @hook("post-gen-py")
 def merge_pre_commit(items):
     """Update the base pre-commit config with Python-specific tools."""
+
+    yaml = YAML()
     with open(".pre-commit-config.yaml", "r") as fh:
-        pre_commit_config = yaml.safe_load(fh.read())
+        pre_commit_config = yaml.load(fh)
 
     pre_commit_config["repos"].extend(
         [
@@ -78,8 +80,13 @@ def merge_pre_commit(items):
         ]
     )
 
+    yaml.explicit_start = True
+    yaml.indent(mapping=2, sequence=4, offset=2)
     with open(".pre-commit-config.yaml", "w") as fh:
-        fh.write(yaml.safe_dump(pre_commit_config))
+        yaml.dump(pre_commit_config, fh)
+
+    with open(".pre-commit-config.yaml", "r") as fh:
+        print(fh.read())
 
 
 @hook("post-gen-py")
