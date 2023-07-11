@@ -30,7 +30,6 @@ author = "{{cookiecutter.author}}"
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.napoleon",
-    "sphinxcontrib.mermaid",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
