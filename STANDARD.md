@@ -81,6 +81,16 @@ In general, projects should at a minimum have a test task that invokes the
 tests and generates test coverage reports and a CodeCov upload task that
 uploads reports to CodeCov.io.
 
+##### autoCancelPreviousChecks
+
+Projects should enable Taskcluster's `autoCancelPreviousChecks` feature to save
+cost when pushing new changes to a pull request by adding the following to their
+root `.taskcluster.yml`:
+
+```yaml
+autoCancelPreviousChecks: true
+```
+
 [Firefox-CI Taskcluster instance]: https://firefox-ci-tc.services.mozilla.com/
 [Taskgraph]: https://github.com/taskcluster/taskgraph
 
