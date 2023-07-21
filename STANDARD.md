@@ -81,6 +81,18 @@ In general, projects should at a minimum have a test task that invokes the
 tests and generates test coverage reports and a CodeCov upload task that
 uploads reports to CodeCov.io.
 
+##### pullRequest policy
+
+Projects should use the `public_restricted` pull request policy. This is
+mandatory if it requires any secrets that are used in pull requests (for
+example, the token for CodeCov.io). This can be done by adding the following to
+the root `.taskcluster.yml`:
+
+```yaml
+policy:
+    pullRequests: public_restricted
+```
+
 ##### autoCancelPreviousChecks
 
 Projects should enable Taskcluster's `autoCancelPreviousChecks` feature to save
