@@ -28,12 +28,13 @@ def run_hooks(group, items):
 
 def run(cmd, **kwargs):
     kwargs.setdefault("check", True)
+    kwargs.setdefault("text", True)
     kwargs.setdefault("stdout", subprocess.PIPE)
     kwargs.setdefault("stderr", subprocess.STDOUT)
     try:
         subprocess.run(cmd, **kwargs)
     except subprocess.CalledProcessError as e:
-        print("+ command failed: {' '.join(cmd)}")
+        print(f"\n command failed: {' '.join(cmd)}")
         print(e.output)
         raise
 
