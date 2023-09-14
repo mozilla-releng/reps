@@ -14,7 +14,7 @@
     "trust_domain": "mozilla",
     "trust_project": "{{cookiecutter.__github_project}}",
     "level": "1",
-    "__secrets_path": "project/{{cookiecutter.trust_domain}}/{{cookiecutter.trust_project}}/level-{{cookiecutter.level}}/ci",
+    "__codecov_secrets_path": "project/{{cookiecutter.trust_domain}}/{{cookiecutter.trust_project}}/level-any/codecov",
     "_copy_without_render": [
         ".github/workflows/codeql-analysis.yml"
     ]

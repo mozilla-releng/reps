@@ -22,7 +22,7 @@ tasks:
             env:
                 MOZ_FETCHES_DIR: /builds/worker/fetches
         scopes:
-            - secrets:get:{{cookiecutter.__secrets_path}}
+            - secrets:get:{{cookiecutter.__codecov_secrets_path}}
         dependencies:
             test: test-unit
         fetches:

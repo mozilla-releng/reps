@@ -22,7 +22,7 @@ tasks:
             env:
                 MOZ_FETCHES_DIR: /builds/worker/fetches
         scopes:
-            - secrets:get:project/mozilla/reps/level-1/ci
+            - secrets:get:project/mozilla/reps/level-any/codecov
         dependencies:
             test: test-unit
         fetches:
