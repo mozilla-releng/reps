@@ -89,27 +89,26 @@ def merge_pre_commit(items):
 
 @hook("post-gen-py")
 def add_poetry_dependencies(items):
+    # Build constraints to ensure we don't try to add versions that are
+    # incompatible with the minimum Python.
+    min_python = items["min_python_version"]
+    constraints = defaultdict(dict)
+    constraints["coverage"] = {"3.7": "coverage@<7.3.0"}
+    constraints["tox"] = {"3.7": "tox@<4.9.0"}
+
+    def build_specifiers(*packages):
+        for p in packages:
+            yield constraints[p].get(min_python, p)
+
     run(
-        [
-            "poetry",
-            "add",
-            "--group=test",
-            "coverage",
-            "pytest",
-            "pytest-mock",
-            "responses",
-            "tox",
-        ]
+        ["poetry", "add", "--group=test"]
+        + list(
+            build_specifiers("coverage", "pytest", "pytest-mock", "responses", "tox")
+        )
     )
     run(
-        [
-            "poetry",
-            "add",
-            "--group=docs",
-            "sphinx<7",
-            "sphinx-autobuild",
-            "sphinx-book-theme",
-        ]
+        ["poetry", "add", "--group=docs"]
+        + list(build_specifiers("sphinx<7", "sphinx-autobuild", "sphinx-book-theme"))
     )
 
 
