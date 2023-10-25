@@ -74,8 +74,8 @@ def merge_pre_commit(items):
                 ],
             },
             {
-                "repo": "https://github.com/charliermarsh/ruff-pre-commit",
-                "rev": "v0.0.272",
+                "repo": "https://github.com/astral-sh/ruff-pre-commit",
+                "rev": "v0.1.1",
                 "hooks": [{"id": "ruff", "args": ["--fix", "--exit-non-zero-on-fix"]}],
             },
         ]
@@ -89,8 +89,8 @@ def merge_pre_commit(items):
 
 @hook("post-gen-py")
 def add_poetry_dependencies(items):
-    # Build constraints to ensure we don't try to add versions that are
-    # incompatible with the minimum Python.
+    # Build constraints to ensure we don't try to add versions
+    # that are incompatible with the minimum Python.
     min_python = items["min_python_version"]
     constraints = defaultdict(dict)
     constraints["coverage"] = {"3.7": "coverage@<7.3.0"}
