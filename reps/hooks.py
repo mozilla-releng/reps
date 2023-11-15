@@ -111,6 +111,11 @@ def add_poetry_dependencies(items):
         + list(build_specifiers("sphinx<7", "sphinx-autobuild", "sphinx-book-theme"))
     )
 
+    run(
+        ["poetry", "add", "--group=type"]
+        + list(build_specifiers("pyright"))
+    )
+
 
 @hook("post-gen-py")
 @hook("post-gen-base")
