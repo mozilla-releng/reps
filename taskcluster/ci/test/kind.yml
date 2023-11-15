@@ -34,3 +34,12 @@ tasks:
             command: >-
                 poetry install --only test &&
                 poetry run tox --parallel
+
+    type-check:
+        description: "Run pyright type checking against code base"
+        worker:
+            max-run-time: 300
+        run:
+            command: >-
+                poetry install --only main --only type &&
+                poetry run pyright

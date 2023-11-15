@@ -1,32 +1,34 @@
 import subprocess
 from collections import defaultdict
 from pathlib import Path
+from typing import Any, Callable, Generator, List
 
 from ruamel.yaml import YAML
 from halo import Halo
 
 from reps.console import command_new
+from reps.types import HookFn, CookiecutterContext
 
 
 HOOKS = defaultdict(list)
 
 
-def hook(name):
-    def wrapper(func):
+def hook(name: str) -> Callable[[HookFn], HookFn]:
+    def wrapper(func: HookFn) -> HookFn:
         HOOKS[name].append(func)
         return func
 
     return wrapper
 
 
-def run_hooks(group, items):
+def run_hooks(group: str, items: CookiecutterContext):
     for hook_fn in HOOKS[group]:
         with Halo(f"running {hook_fn.__name__}") as spinner:
             hook_fn(items)
             spinner.succeed(f"{hook_fn.__name__}")
 
 
-def run(cmd, **kwargs):
+def run(cmd: List[str], **kwargs: Any):
     kwargs.setdefault("check", True)
     kwargs.setdefault("text", True)
     kwargs.setdefault("stdout", subprocess.PIPE)
@@ -40,7 +42,7 @@ def run(cmd, **kwargs):
 
 
 @hook("pre-gen-py")
-def base_init(items):
+def base_init(items: CookiecutterContext):
     """Generate the 'base' template first."""
     if "_copy_without_render" in items:
         del items["_copy_without_render"]
@@ -57,7 +59,7 @@ def base_init(items):
 
 
 @hook("post-gen-py")
-def merge_pre_commit(items):
+def merge_pre_commit(items: CookiecutterContext):
     """Update the base pre-commit config with Python-specific tools."""
 
     yaml = YAML()
@@ -88,7 +90,7 @@ def merge_pre_commit(items):
 
 
 @hook("post-gen-py")
-def add_poetry_dependencies(items):
+def add_poetry_dependencies(items: CookiecutterContext):
     # Build constraints to ensure we don't try to add versions
     # that are incompatible with the minimum Python.
     min_python = items["min_python_version"]
@@ -96,7 +98,7 @@ def add_poetry_dependencies(items):
     constraints["coverage"] = {"3.7": "coverage@<7.3.0"}
     constraints["tox"] = {"3.7": "tox@<4.9.0"}
 
-    def build_specifiers(*packages):
+    def build_specifiers(*packages: str) -> Generator[str, None, None]:
         for p in packages:
             yield constraints[p].get(min_python, p)
 
@@ -111,15 +113,12 @@ def add_poetry_dependencies(items):
         + list(build_specifiers("sphinx<7", "sphinx-autobuild", "sphinx-book-theme"))
     )
 
-    run(
-        ["poetry", "add", "--group=type"]
-        + list(build_specifiers("pyright"))
-    )
+    run(["poetry", "add", "--group=type"] + list(build_specifiers("pyright")))
 
 
 @hook("post-gen-py")
 @hook("post-gen-base")
-def git_init(items):
+def git_init(items: CookiecutterContext):
     run(["git", "init"])
     run(["git", "checkout", "-b", "main"])
     run(
@@ -135,16 +134,16 @@ def git_init(items):
 
 @hook("post-gen-py")
 @hook("post-gen-base")
-def pre_commit_autoupdate(items):
+def pre_commit_autoupdate(items: CookiecutterContext):
     run(["pre-commit", "autoupdate"])
 
 
 @hook("post-gen-py")
 @hook("post-gen-base")
-def lock_taskgraph_requirements(items):
+def lock_taskgraph_requirements(items: CookiecutterContext):
     run(["pip-compile", "requirements.in", "--generate-hashes"], cwd="taskcluster")
 
 
 @hook("post-gen-base")
-def taskgraph_init(items):
+def taskgraph_init(items: CookiecutterContext):
     run(["taskgraph", "init"])
