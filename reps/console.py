@@ -1,6 +1,7 @@
 import sys
 from argparse import ArgumentParser
 from pathlib import Path
+from typing import Any, List
 
 from cookiecutter.main import cookiecutter
 
@@ -12,7 +13,7 @@ def available_templates():
     return [path.name for path in TEMPLATE_DIR.iterdir() if path.is_dir()]
 
 
-def command_new(name, template, **cookiecutter_args):
+def command_new(name: str, template: str, **cookiecutter_args: Any):
     if template not in available_templates():
         print(f"template '{template}' not found!")
         return 1
@@ -23,17 +24,17 @@ def command_new(name, template, **cookiecutter_args):
         # specified, ensure we don't error out when the project already exists.
         cookiecutter_args.setdefault("overwrite_if_exists", False)
 
-    template = TEMPLATE_DIR / template
+    template = str(TEMPLATE_DIR / template)
     cookiecutter_args.setdefault("extra_context", {}).setdefault("project_name", name)
 
     # Generate the project.
     cookiecutter(
-        str(template),
+        template,
         **cookiecutter_args,
     )
 
 
-def run(args=sys.argv[1:]):
+def run(args: List[str] = sys.argv[1:]):
     parser = ArgumentParser()
     parser.add_argument(
         "name", nargs="?", default=None, help="Name of the project to create."

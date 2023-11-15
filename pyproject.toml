@@ -25,6 +25,10 @@ tox = "^4.6.4"
 coverage = {extras = ["toml"], version = "^7.2.7"}
 requests = "^2.31.0"
 
+
+[tool.poetry.group.type.dependencies]
+pyright = "^1.1.336"
+
 [tool.black]
 extend-exclude = """(\
   reps/templates)\
@@ -38,6 +42,11 @@ testpaths = ["test"]
 
 [tool.ruff]
 exclude = ["reps/templates"]
+
+[tool.pyright]
+include = ["reps"]
+ignore = ["reps/templates"]
+reportUnknownParameterType = "error"
 
 [build-system]
 requires = ["poetry-core"]
