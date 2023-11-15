@@ -406,6 +406,7 @@ following rules:
 * isort
 * pylint (convention and error only)
 * pyupgrade
+* flake8-type-checking
 
 Configuration should live in the top-level `pyproject.toml` file:
 
@@ -417,6 +418,7 @@ select = [
     "I",              # isort
     "PLC", "PLE",     # pylint
     "UP",             # pyupgrade
+    "TCH",            # flake8-type-checking
 ]
 ignore = [
     "E501",  # let black handle line-length
@@ -440,3 +442,57 @@ repos:
 Be sure to run `pre-commit autoupdate` to pick up the latest version.
 
 [ruff]: https://pypi.org/project/ruff/
+
+### Type Checking
+
+Projects should use [Pyright] for type checking. Pyright has advanced type
+inference capabilities, so can provide value even on projects that don't have
+any type annotations.
+
+While annotations aren't necessary for Pyright to function, providing them
+allows both Pyright and other developers to understand the code base in more
+depth. As such, annotations should be enforced for new projects.
+
+Configuration for Pyright should live in the top-level `pyproject.toml` file:
+
+```toml
+[tool.pyright]
+include = "src/<package>"
+reportUnknownParameterType = "error"
+```
+
+The `reportUnknownParameterType` config enforces type annotations. If enabling
+Pyright on an existing project that is missing annotations, it is recommended
+to omit this config. In this case, see [Getting Started with Type Checking] for
+a recommended incremental upgrade path.
+
+#### Where to Run
+
+Pyright should be run as a Taskcluster task, similar to:
+
+```yaml
+type-check:
+    description: "Run Pyright type checking against code base"
+    worker-type: linux
+    worker:
+        docker-image: {in-tree: python}
+        max-run-time: 300
+    run:
+        using: run-task
+        cwd: '{checkout}'
+        cache-dotcache: true
+        command: >-
+            poetry install --only main --only type &&
+            poetry run pyright
+```
+
+While it's possible to run as a [pre-commit hook], this method isn't
+recommended as Pyright needs to run in an environment where the project's
+dependencies are installed. This means either the dependencies need to be
+listed a second time in `pre-commit-config.yaml`, or Pyright needs to be
+explicitly told about Poetry's virtualenv (which varies from person to person
+and shouldn't be committed in the config file).
+
+[Pyright]: https://github.com/Microsoft/pyright
+[Getting Started with Type Checking]: https://microsoft.github.io/pyright/#/getting-started
+[pre-commit hook]: https://microsoft.github.io/pyright/#/ci-integration?id=running-pyright-as-a-pre-commit-hook
