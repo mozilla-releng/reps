@@ -415,13 +415,14 @@ select = [
     "E", "W",         # pycodestyle
     "F",              # pyflakes
     "I",              # isort
-    "PLC", "PLE",  # pylint
+    "PLC", "PLE",     # pylint
     "UP",             # pyupgrade
 ]
 ignore = [
     "E501",  # let black handle line-length
 ]
-target-version = "py37"
+# change to your minimum supported Python version
+target-version = "py38"
 ```
 
 Additionally ruff should be configured to run in the `pre-commit` hook by adding
@@ -429,8 +430,8 @@ the following to the top-level `.pre-commit-config.yaml` file:
 
 ```yaml
 repos:
-  - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: 'v0.0.272'
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: 'v0.1.5'
     hooks:
     - id: ruff
         args: [--fix, --exit-non-zero-on-fix]
