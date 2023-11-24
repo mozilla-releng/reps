@@ -1,7 +1,7 @@
 ---
 ci:
   autofix_commit_msg: "style: pre-commit.ci auto fixes [...]"
-  autoupdate_comit_msg: "chore: pre-commit autoupdate"
+  autoupdate_commit_msg: "chore: pre-commit autoupdate"
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
