@@ -97,6 +97,14 @@ def add_poetry_dependencies(items: CookiecutterContext):
     constraints = defaultdict(dict)
     constraints["coverage"] = {"3.7": "coverage@<7.3.0"}
     constraints["tox"] = {"3.7": "tox@<4.9.0"}
+    constraints["sphinx-book-theme"] = {
+        "3.7": "sphinx-book-theme@<=1.0.1",
+        "3.8": "sphinx-book-theme@<=1.0.1",
+    }
+    constraints["sphinx-autobuild"] = {
+        "3.7": "sphinx-autobuild@<=2021.3.14",
+        "3.8": "sphinx-autobuild@<=2021.3.14",
+    }
 
     def build_specifiers(*packages: str) -> Generator[str, None, None]:
         for p in packages:
