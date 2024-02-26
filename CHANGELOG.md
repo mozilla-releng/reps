@@ -1,3 +1,13 @@
+## 0.4.0 (2024-02-02)
+
+### Feat
+
+- add type checking with Pyright to the standard
+
+### Fix
+
+- **python**: typo in .pre-commit-config.yaml
+
 ## 0.3.6 (2023-11-21)
 
 ### Fix
