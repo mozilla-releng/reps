@@ -28,11 +28,6 @@ requests = "^2.31.0"
 [tool.poetry.group.type.dependencies]
 pyright = "^1.1.336"
 
-[tool.black]
-extend-exclude = """(\
-  reps/templates)\
-  """
-
 [tool.coverage.run]
 omit = ["reps/templates/*"]
 
@@ -40,7 +35,7 @@ omit = ["reps/templates/*"]
 testpaths = ["test"]
 
 [tool.ruff]
-exclude = ["reps/templates"]
+extend-exclude = ["reps/templates"]
 
 [tool.pyright]
 include = ["reps"]

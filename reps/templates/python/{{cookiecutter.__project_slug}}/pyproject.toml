@@ -9,9 +9,6 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^{{cookiecutter.min_python_version}}"
 
-[tool.black]
-line-length = 88
-
 [tool.pytest.ini_options]
 xfail_strict = true
 
@@ -21,6 +18,10 @@ branch = true
 source = ["src/{{cookiecutter.__package_name}}/"]
 
 [tool.ruff]
+line-length = 88
+target-version = "py{{cookiecutter.__min_tox_python_version}}"
+
+[tool.ruff.lint]
 select = [
     "E", "W",       # pycodestyle
     "F",            # pyflakes
@@ -30,9 +31,8 @@ select = [
     "TCH",          # flake8-type-checking
 ]
 ignore = [
-    "E501",  # let black handle line-length
+    "E501",  # let ruff-format handle line-length
 ]
-target-version = "py{{cookiecutter.__min_tox_python_version}}"
 
 [tool.ruff.isort]
 known-first-party = ["{{cookiecutter.__package_name}}"]

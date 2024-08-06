@@ -367,39 +367,40 @@ commands = coverage erase
 
 [tox]: https://tox.wiki/
 
-### Formatting
+### Formatting and Linting
 
-Projects should use [black] for formatting. The default configuration is
-recommended, but if extra configuration is necessary (e.g to exclude files), it
-should go in the top-level `pyproject.toml` file:
+Projects should use [ruff] for formatting and linting. The default
+configuration is recommended, but if extra configuration is necessary (e.g to
+exclude files), it should go in the top-level `pyproject.toml` file:
 
 ```toml
-[tool.black]
-extend-exclude = """(\
-  test/data\
-  src/foo)\
-  """
+[tool.ruff]
+extend-exclude = [
+  "test/data",
+  "src/foo",
+]
 ```
 
-Additionally, black should be configured to run in the pre-commit hook by
+Additionally, `ruff` should be configured to run in the pre-commit hook by
 adding the following to the top-level `.pre-commit-config.yaml` file:
 
 ```yaml
 repos:
-  - repo: https://github.com/psf/black
-    rev: 23.3.0
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.5.6
     hooks:
-    - id: black
+      - id: ruff
+        args: ["--fix"]
+      - id: ruff-format
 ```
 
 Be sure to run `pre-commit autoupdate` to pick up the latest version.
 
-[black]: https://pypi.org/project/black/
+[ruff]: https://pypi.org/project/ruff/
 
-### Linting
+#### Lint Rules
 
-Projects should use [ruff] for linting. Ruff should be configured to run the
-following rules:
+Ruff should be configured to run the following lint rules:
 
 * pycodestyle
 * pyflakes
@@ -421,27 +422,11 @@ select = [
     "TCH",            # flake8-type-checking
 ]
 ignore = [
-    "E501",  # let black handle line-length
+    "E501",  # let ruff-format handle line-length
 ]
 # change to your minimum supported Python version
 target-version = "py38"
 ```
-
-Additionally ruff should be configured to run in the `pre-commit` hook by adding
-the following to the top-level `.pre-commit-config.yaml` file:
-
-```yaml
-repos:
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: 'v0.1.5'
-    hooks:
-    - id: ruff
-        args: [--fix, --exit-non-zero-on-fix]
-```
-
-Be sure to run `pre-commit autoupdate` to pick up the latest version.
-
-[ruff]: https://pypi.org/project/ruff/
 
 ### Type Checking
 
