@@ -69,16 +69,12 @@ def merge_pre_commit(items: CookiecutterContext):
     pre_commit_config["repos"].extend(
         [
             {
-                "repo": "https://github.com/psf/black",
-                "rev": "23.3.0",
-                "hooks": [
-                    {"id": "black"},
-                ],
-            },
-            {
                 "repo": "https://github.com/astral-sh/ruff-pre-commit",
-                "rev": "v0.1.1",
-                "hooks": [{"id": "ruff", "args": ["--fix", "--exit-non-zero-on-fix"]}],
+                "rev": "v0.5.6",
+                "hooks": [
+                    {"id": "ruff", "args": ["--fix", "--exit-non-zero-on-fix"]},
+                    {"id": "ruff-format"},
+                ],
             },
         ]
     )
