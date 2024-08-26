@@ -86,20 +86,20 @@ def merge_pre_commit(items: CookiecutterContext):
 
 
 @hook("post-gen-py")
-def add_poetry_dependencies(items: CookiecutterContext):
+def add_uv_dependencies(items: CookiecutterContext):
     # Build constraints to ensure we don't try to add versions
     # that are incompatible with the minimum Python.
     min_python = items["min_python_version"]
     constraints = defaultdict(dict)
-    constraints["coverage"] = {"3.7": "coverage@<7.3.0"}
-    constraints["tox"] = {"3.7": "tox@<4.9.0"}
+    constraints["coverage"] = {"3.7": "coverage<7.3.0"}
+    constraints["tox"] = {"3.7": "tox<4.9.0"}
     constraints["sphinx-book-theme"] = {
-        "3.7": "sphinx-book-theme@<=1.0.1",
-        "3.8": "sphinx-book-theme@<=1.0.1",
+        "3.7": "sphinx-book-theme<=1.0.1",
+        "3.8": "sphinx-book-theme<=1.0.1",
     }
     constraints["sphinx-autobuild"] = {
-        "3.7": "sphinx-autobuild@<=2021.3.14",
-        "3.8": "sphinx-autobuild@<=2021.3.14",
+        "3.7": "sphinx-autobuild<=2021.3.14",
+        "3.8": "sphinx-autobuild<=2021.3.14",
     }
 
     def build_specifiers(*packages: str) -> Generator[str, None, None]:
@@ -107,17 +107,24 @@ def add_poetry_dependencies(items: CookiecutterContext):
             yield constraints[p].get(min_python, p)
 
     run(
-        ["poetry", "add", "--group=test"]
+        # Until the pyproject.toml spec and/or uv supports dependency groups, we
+        # need to add these all to "dev-dependencies"
+        # See: https://github.com/astral-sh/uv/issues/5632
+        ["uv", "add", "--dev"]
         + list(
-            build_specifiers("coverage", "pytest", "pytest-mock", "responses", "tox")
+            build_specifiers(
+                "coverage",
+                "pyright",
+                "pytest",
+                "pytest-mock",
+                "responses",
+                "sphinx<7",
+                "sphinx-autobuild",
+                "sphinx-book-theme",
+                "tox",
+            )
         )
     )
-    run(
-        ["poetry", "add", "--group=docs"]
-        + list(build_specifiers("sphinx<7", "sphinx-autobuild", "sphinx-book-theme"))
-    )
-
-    run(["poetry", "add", "--group=type"] + list(build_specifiers("pyright")))
 
 
 @hook("post-gen-py")

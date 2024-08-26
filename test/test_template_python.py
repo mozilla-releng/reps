@@ -26,7 +26,6 @@ def test_generated_files(reps_new):
         "docs/reference/index.rst",
         "docs/tutorials/index.rst",
         "pyproject.toml",
-        "poetry.lock",
         f"src/{name}/__init__.py",
         "taskcluster/config.yml",
         "taskcluster/docker/fetch/Dockerfile",
@@ -36,17 +35,16 @@ def test_generated_files(reps_new):
         "taskcluster/kinds/fetch/kind.yml",
         "taskcluster/kinds/test/kind.yml",
         "taskcluster/scripts/codecov-upload.py",
-        "taskcluster/scripts/pyenv-setup",
-        "taskcluster/scripts/poetry-setup",
         "test/conftest.py",
         f"test/test_{name}.py",
         "tox.ini",
+        "uv.lock",
     ]
 
     project = reps_new(name, "python")
 
     actual = []
-    ignore = ("__pycache__", ".git/", ".pyc")
+    ignore = ("__pycache__", ".git/", ".pyc", ".venv")
     for path in project.rglob("*"):
         if path.is_dir() or any(i in str(path) for i in ignore):
             continue
@@ -64,7 +62,8 @@ def test_generated_files(reps_new):
                 "__project_slug": "my-package",
                 "__package_name": "my_package",
                 "short_description": "",
-                "author": "Mozilla Release Engineering <release@mozilla.com>",
+                "author_name": "Mozilla Release Engineering",
+                "author_email": "release@mozilla.com",
                 "github_slug": "mozilla-releng/my-package",
                 "min_python_version": "3.8",
                 "__min_tox_python_version": "38",

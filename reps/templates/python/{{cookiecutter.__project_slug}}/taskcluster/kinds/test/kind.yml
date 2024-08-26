@@ -32,8 +32,7 @@ tasks:
                 TOX_PARALLEL_NO_SPINNER: "1"
         run:
             command: >-
-                poetry install --only test &&
-                poetry run tox --parallel
+                uv run tox --parallel
 
     type-check:
         description: "Run pyright type checking against code base"
@@ -41,5 +40,4 @@ tasks:
             max-run-time: 300
         run:
             command: >-
-                poetry install --only main --only type &&
-                poetry run pyright
+                uv run pyright

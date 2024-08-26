@@ -1,7 +1,7 @@
 {%- set pylist -%}
 {%- for i in range(cookiecutter.__max_tox_python_version[1:]|int, cookiecutter.__min_tox_python_version[1:]|int - 1, -1) -%}
 3.{{i}}
-{%- if not loop.last %},{% endif -%}
+{%- if not loop.last %} {% endif -%}
 {%- endfor -%}
 {%- endset -%}
 ---
@@ -16,4 +16,4 @@ tasks:
     fetch: {}
     python:
         args:
-            PYENV_VERSIONS: "{{pylist}}"
+            PYTHON_VERSIONS: "{{pylist}}"

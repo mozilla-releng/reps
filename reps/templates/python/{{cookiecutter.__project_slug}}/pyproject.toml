@@ -1,13 +1,15 @@
-[tool.poetry]
+[project]
 name = "{{cookiecutter.__project_slug}}"
 version = "0.1.0"
 description = "{{cookiecutter.short_description}}"
-authors = ["{{cookiecutter.author}}"]
-license = "MPL-2.0"
+requires-python = ">={{cookiecutter.min_python_version}}"
+authors = [
+  { name = "{{cookiecutter.author_name}}", email = "{{cookiecutter.author_email}}" }
+]
+classifiers = [
+  "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)",
+]
 readme = "README.md"
-
-[tool.poetry.dependencies]
-python = "^{{cookiecutter.min_python_version}}"
 
 [tool.pytest.ini_options]
 xfail_strict = true
@@ -42,5 +44,5 @@ include = ["src/{{cookiecutter.__package_name}}"]
 reportUnknownParameterType = "error"
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
