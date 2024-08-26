@@ -35,5 +35,4 @@ tasks:
             using: run-task
             cwd: '{checkout}'
             command: >-
-                poetry install --only test &&
-                poetry run python taskcluster/scripts/codecov-upload.py
+                uv run python taskcluster/scripts/codecov-upload.py

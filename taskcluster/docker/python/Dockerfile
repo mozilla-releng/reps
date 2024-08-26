@@ -22,18 +22,10 @@ ENV SHELL=/bin/bash \
 VOLUME /builds/worker/checkouts
 VOLUME /builds/worker/.cache
 
-# pyenv
-# %ARG PYENV_VERSIONS
-ENV PYENV_ROOT=/builds/worker/.pyenv \
-    PATH=/builds/worker/.pyenv/bin:/builds/worker/.pyenv/shims:$PATH
-# %include taskcluster/scripts/pyenv-setup
-ADD topsrcdir/taskcluster/scripts/pyenv-setup /builds/worker/pyenv-setup
-RUN /builds/worker/pyenv-setup "$PYENV_VERSIONS"
-
-# %include taskcluster/scripts/poetry-setup
-ADD topsrcdir/taskcluster/scripts/poetry-setup /builds/worker/poetry-setup
-RUN /builds/worker/poetry-setup
-
+# uv
+COPY --from=ghcr.io/astral-sh/uv:0.3.5 /uv /bin/uv
+# %ARG PYTHON_VERSIONS
+RUN uv python install $PYTHON_VERSIONS
 RUN chown -R worker:worker /builds/worker
 
 # Set a default command useful for debugging

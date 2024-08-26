@@ -1,32 +1,43 @@
-[tool.poetry]
+[project]
 name = "reps-new"
 version = "0.3.6"
 description = "Mozilla Release Engineering Project Standard"
-authors = ["Mozilla Release Engineering <release@mozilla.com>"]
-license = "MPL-2.0"
+requires-python = ">=3.8"
+authors = [
+  { name = "Mozilla Release Engineering", email = "release@mozilla.com" }
+]
+classifiers = [
+  "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)",
+  "Topic :: System :: Installation/Setup",
+]
 readme = "README.md"
-packages = [{ include = "reps" }]
+dependencies = [
+  "cookiecutter >=2.6.0, <3",
+  "pre-commit >=3.5.0, <4",
+  "pip-tools >=7.4.0, <8",
+  "halo >=0.0.31, <1",
+  "ruamel-yaml >=0.18.6, <1",
+]
 
-[tool.poetry.dependencies]
-python = "^3.8"
-cookiecutter = "^2.6.0"
-pre-commit = "^3.5.0"
-pip-tools = "^7.4.0"
-halo = "^0.0.31"
-ruamel-yaml = "^0.18.6"
+[project.urls]
+Repository = "https://github.com/mozilla-releng/reps"
+Issues = "https://github.com/mozilla-releng/reps/issues"
 
-[tool.poetry.scripts]
+
+[project.scripts]
 reps-new = "reps.console:run"
 
-[tool.poetry.group.test.dependencies]
-pytest = "^7.4.0"
-tox = "^4.6.4"
-coverage = {extras = ["toml"], version = "^7.2.7"}
-requests = "^2.31.0"
+[tool.uv]
+dev-dependencies = [
+  "coverage[toml] ~= 7.2",
+  "pyright ~= 1.1",
+  "pytest ~= 7.4",
+  "requests ~= 2.31",
+  "tox ~= 4.6",
+]
 
-
-[tool.poetry.group.type.dependencies]
-pyright = "^1.1.336"
+[tool.hatch.build.targets.wheel]
+packages = ["reps"]
 
 [tool.coverage.run]
 omit = ["reps/templates/*"]
@@ -43,5 +54,5 @@ ignore = ["reps/templates"]
 reportUnknownParameterType = "error"
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
