@@ -10,4 +10,4 @@ tasks:
     fetch: {}
     python:
         args:
-            PYENV_VERSIONS: "3.11,3.10,3.9,3.8"
+            PYTHON_VERSIONS: "3.11 3.10 3.9 3.8"
