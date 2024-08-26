@@ -281,11 +281,11 @@ standards.
 
 ### Packaging
 
-Projects should use [Poetry] to manage dependencies, run builds and publish
-packages. Running `poetry init` should be sufficient to generate the initial
+Projects should use [uv] to manage dependencies, virtualenvs and publish
+packages. Running `uv init` should be sufficient to generate the initial
 configuration in the top-level `pyproject.toml` file.
 
-[Poetry]: https://python-poetry.org/
+[uv]: https://docs.astral.sh/uv/
 
 ### Testing
 
@@ -467,15 +467,14 @@ type-check:
         cwd: '{checkout}'
         cache-dotcache: true
         command: >-
-            poetry install --only main --only type &&
-            poetry run pyright
+            uv run pyright
 ```
 
 While it's possible to run as a [pre-commit hook], this method isn't
 recommended as Pyright needs to run in an environment where the project's
 dependencies are installed. This means either the dependencies need to be
 listed a second time in `pre-commit-config.yaml`, or Pyright needs to be
-explicitly told about Poetry's virtualenv (which varies from person to person
+explicitly told about uv's virtualenv (which varies from person to person
 and shouldn't be committed in the config file).
 
 [Pyright]: https://github.com/Microsoft/pyright
