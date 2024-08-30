@@ -142,12 +142,6 @@ def pre_commit_autoupdate(items: CookiecutterContext):
     run(["pre-commit", "autoupdate"])
 
 
-@hook("post-gen-py")
-@hook("post-gen-base")
-def lock_taskgraph_requirements(items: CookiecutterContext):
-    run(["pip-compile", "requirements.in", "--generate-hashes"], cwd="taskcluster")
-
-
 @hook("post-gen-base")
 def taskgraph_init(items: CookiecutterContext):
     run(["taskgraph", "init"])
