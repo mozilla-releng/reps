@@ -10,12 +10,12 @@ repos:
           - id: check-yaml
           - id: check-added-large-files
       repo: https://github.com/pre-commit/pre-commit-hooks
-      rev: v4.5.0
+      rev: v4.6.0
     - hooks:
           - entry: codespell
             id: codespell
       repo: https://github.com/codespell-project/codespell
-      rev: v2.2.6
+      rev: v2.3.0
     - hooks:
           - id: yamllint
       repo: https://github.com/adrienverge/yamllint.git
@@ -27,7 +27,7 @@ repos:
             id: ruff
           - id: ruff-format
       repo: https://github.com/charliermarsh/ruff-pre-commit
-      rev: v0.3.5
+      rev: v0.6.3
 exclude: |
   (?x)^(
     reps/templates
