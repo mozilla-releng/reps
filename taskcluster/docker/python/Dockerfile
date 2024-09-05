@@ -5,9 +5,11 @@
 FROM python:3.9
 LABEL maintainer="Mozilla Release Engineering <release@mozilla.com>"
 
+VOLUME /builds/worker/checkouts
+VOLUME /builds/worker/.cache
+
 # Add worker user
-RUN mkdir /builds && \
-    useradd -d /builds/worker -s /bin/bash -m worker && \
+RUN useradd -d /builds/worker -s /bin/bash -m worker && \
     mkdir -p /builds/worker/artifacts
 
 # %include-run-task
@@ -18,9 +20,6 @@ RUN apt-get update && apt-get install -y --force-yes --no-install-recommends \
 ENV SHELL=/bin/bash \
     HOME=/builds/worker \
     PATH=/builds/worker/.local/bin:$PATH
-
-VOLUME /builds/worker/checkouts
-VOLUME /builds/worker/.cache
 
 # uv
 COPY --from=ghcr.io/astral-sh/uv:0.3.5 /uv /bin/uv
