@@ -15,7 +15,7 @@ repos:
           - entry: codespell
             id: codespell
       repo: https://github.com/codespell-project/codespell
-      rev: v2.3.0
+      rev: v2.4.1
     - hooks:
           - id: yamllint
       repo: https://github.com/adrienverge/yamllint.git
@@ -27,7 +27,7 @@ repos:
             id: ruff
           - id: ruff-format
       repo: https://github.com/charliermarsh/ruff-pre-commit
-      rev: v0.8.6
+      rev: v0.9.9
 exclude: |
   (?x)^(
     reps/templates
