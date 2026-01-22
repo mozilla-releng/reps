@@ -1,0 +1,84 @@
+// This renovatebot configuration is intended to serve all Mozilla Release Engineering
+// repositories. Depending on the repo it is placed in, some sections may do nothing (eg:
+// repos without JS code). Nevertheless, it's preferable to have One True Config that we
+// can easily copy/paste everywhere.
+//
+// The source of truth for this configuration is in
+// https://github.com/mozilla-releng/renovate-config.
+// This repository also contains a list of all of the places it should be copied when updated.
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:best-practices"
+  ],
+  "schedule": [
+    // between 00:00 - 06:00 on Thursdays. this lines up with the day we typically do
+    // staging deploys
+    "* 0-6 * * 4"
+  ],
+  // this is the default, but let's be explicit about it
+  "timezone": "UTC",
+  // remove automatic grouping; this allows us to group, eg: all frontend dependencies together in
+  // one PR (and more generally, be in control of how grouping happens)
+  "ignorePresets": ["group:monorepos", "group:recommended"],
+  // packageRules is where we specify dependency updates for file and package types that
+  // are supported out-of-box
+  "packageRules": [
+    // group all non-major python dependencies together
+    // major dependency bumps will bypass this, and each get their own PR
+    {
+      "matchManagers": ["pep621"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "groupName": "python dependencies"
+    },
+    // group all JS dependencies together
+    // we may want to revisit at some point if eg: we need to treat major bumps
+    // differently
+    {
+      "matchManagers": ["npm"],
+      "groupName": "js dependencies"
+    },
+    // group all docker-related files together, as much as possible anyways
+    // some Dockerfiles have an argument, eg: `PYTHON_VERSION` in their `FROM`
+    // statements, which will not be handled here. we could, theoretically,
+    // do this in a `customManager`, but in reality this is something we tend to
+    // want to do by hand
+    {
+      "matchManagers": ["dockerfile", "docker-compose"],
+      "groupName": "docker dependencies"
+    }
+  ],
+  // customManagers is where we specify dependency updates for files that renovate doesn't
+  // know how to parse out-of-box
+  "customManagers": [
+    // update .taskcluster.yml decision image pins
+    // a separate entry is needed to support `decision` and `run-task` tags without
+    // having renovate bump pins from one to the other.
+    {
+      // ideally this would use the jsonata `customType`, which would be more robust, but
+      // it does not support updating digests
+      // https://github.com/renovatebot/renovate/discussions/37921#discussioncomment-14355017
+      "customType": "regex",
+      "datasourceTemplate": "docker",
+      "managerFilePatterns": [".taskcluster.yml"],
+      "matchStrings": [
+        // identify docker image definitions by looking for a line like:
+        // image: mozillareleases/taskgraph:decision-v14.4.1@sha256:d5116d01d51856be2c143f260d0ba44f9b07576aa7104744bb94335534de2638
+        "image: (?<depName>\\S+):(?<currentValue>decision-\\S+)@(?<currentDigest>\\S+)"
+      ],
+      // overwrite the version parsing. necessary because of the `decision-v` prefix
+      // we have on the image tags. without this, parsing fails and no updates will
+      // be found
+      "versioningTemplate": "regex:^decision-v(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$"
+    },
+    {
+      "customType": "regex",
+      "datasourceTemplate": "docker",
+      "managerFilePatterns": [".taskcluster.yml"],
+      "matchStrings": [
+        "image: (?<depName>\\S+):(?<currentValue>run-task-\\S+)@(?<currentDigest>\\S+)"
+      ],
+      "versioningTemplate": "regex:^run-task-v(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$"
+    },
+  ]
+}

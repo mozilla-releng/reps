@@ -148,6 +148,13 @@ The [default setup] should be enabled and run via Github Actions.
 [CodeQL]: https://codeql.github.com/
 [default setup]: https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning-for-a-repository#configuring-code-scanning-automatically
 
+#### Renovate
+
+We use [RenovateBot] to keep dependencies up to date. This repository contains a [Shareable Config Preset] for that service, and a default configuration that points projects bootstrapped from this repository at it. You should avoid custom config in other repositories if at all possible, and prefer to upstream any changes to the config hosted here.
+
+[RenovateBot]: https://docs.renovatebot.com/
+[Shareable Config Preset]: https://docs.renovatebot.com/config-presets/#shareable-config-presets
+
 ### Documentation
 
 Documentation should be generated using [Sphinx], written with reStructuredText
