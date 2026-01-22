@@ -26,6 +26,7 @@ def test_generated_files(reps_new):
         "docs/reference/index.rst",
         "docs/tutorials/index.rst",
         "pyproject.toml",
+        "renovate.json",
         f"src/{name}/__init__.py",
         "taskcluster/config.yml",
         "taskcluster/docker/fetch/Dockerfile",
