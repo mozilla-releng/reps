@@ -46,7 +46,13 @@
       "matchManagers": ["dockerfile", "docker-compose"],
       "matchUpdateTypes": ["patch", "minor"],
       "groupName": "docker dependencies"
-    }
+    },
+    // group all non-major github action bumps together
+    {
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "groupName": "github actions"
+    },
   ],
   // customManagers is where we specify dependency updates for files that renovate doesn't
   // know how to parse out-of-box
