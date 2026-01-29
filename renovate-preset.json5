@@ -31,20 +31,20 @@
       "matchUpdateTypes": ["patch", "minor"],
       "groupName": "python dependencies"
     },
-    // group all JS dependencies together
-    // we may want to revisit at some point if eg: we need to treat major bumps
-    // differently
+    // group all non-major JS dependencies together
     {
       "matchManagers": ["npm"],
+      "matchUpdateTypes": ["patch", "minor"],
       "groupName": "js dependencies"
     },
-    // group all docker-related files together, as much as possible anyways
+    // group all non-major docker-related files together, as much as possible anyways
     // some Dockerfiles have an argument, eg: `PYTHON_VERSION` in their `FROM`
     // statements, which will not be handled here. we could, theoretically,
     // do this in a `customManager`, but in reality this is something we tend to
     // want to do by hand
     {
       "matchManagers": ["dockerfile", "docker-compose"],
+      "matchUpdateTypes": ["patch", "minor"],
       "groupName": "docker dependencies"
     }
   ],
