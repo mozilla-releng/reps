@@ -26,5 +26,5 @@ repos:
       rev: v0.14.14
 exclude: |
   (?x)^(
-    reps/templates
+    template
   )

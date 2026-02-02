@@ -1,57 +1,41 @@
 [project]
 name = "reps-new"
-version = "0.3.6"
+version = "0.4.0"
 description = "Mozilla Release Engineering Project Standard"
 requires-python = ">=3.8"
 authors = [
-  { name = "Mozilla Release Engineering", email = "release@mozilla.com" }
+  { name = "Mozilla Release Engineering", email = "release+reps@mozilla.com" }
 ]
 classifiers = [
   "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)",
   "Topic :: System :: Installation/Setup",
 ]
 readme = "README.md"
+
 dependencies = [
-  "cookiecutter >=2.6.0, <3",
-  "pre-commit >=3.5.0, <4",
-  "pip-tools >=7.4.0, <8",
-  "halo >=0.0.31, <1",
-  "ruamel-yaml >=0.18.6, <1",
+  "pre-commit",
+  "taskcluster-taskgraph",
+  "uv",
 ]
 
 [project.urls]
 Repository = "https://github.com/mozilla-releng/reps"
 Issues = "https://github.com/mozilla-releng/reps/issues"
 
-
-[project.scripts]
-reps-new = "reps.console:run"
-
-[tool.uv]
-dev-dependencies = [
-  "coverage[toml] ~= 7.2",
-  "pyright ~= 1.1",
-  "pytest ~= 7.4",
-  "requests ~= 2.31",
-  "tox ~= 4.6",
+[dependency-groups]
+dev = [
+  "copier",
+  "pre-commit",
+  "pytest",
+  "requests",
+  "uv",
 ]
 
 [tool.hatch.build.targets.wheel]
 packages = ["reps"]
 
-[tool.coverage.run]
-omit = ["reps/templates/*"]
-
 [tool.pytest.ini_options]
 testpaths = ["test"]
-
-[tool.ruff]
-extend-exclude = ["reps/templates"]
-
-[tool.pyright]
-include = ["reps"]
-ignore = ["reps/templates"]
-reportUnknownParameterType = "error"
 
 [build-system]
 requires = ["hatchling"]

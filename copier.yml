@@ -1,0 +1,116 @@
+# Config
+_subdirectory: "template"
+_templates_suffix: ".tmpl"
+
+# Context
+project_name:
+  type: str
+  help: "Enter project name:"
+  default: "{{ _copier_conf.dst_path }}"
+
+project_slug:
+  type: str
+  when: false
+  default: "{{ project_name | lower | replace(' ', '-') }}"
+
+project_vcs:
+  type: str
+  help: "Enter project version control system:"
+  choices: ["git", "jj"]
+  default: "git"
+
+short_description:
+  type: str
+  help: "Enter a brief description:"
+  default: ""
+
+author:
+  type: str
+  help: "Enter author in the form `Author <E-Mail>`:"
+  default: "Mozilla Release Engineering <release+{{ project_slug }}@mozilla.com>"
+
+author_name:
+  type: str
+  when: false
+  default: >-
+    {% if '<' in author and '>' in author %}
+    {{ author.rsplit('<', 1)[0].strip() }}
+    {% else %}
+    {{ author }}
+    {% endif %}
+
+author_email:
+  type: str
+  when: false
+  default: >-
+    {% if '<' in author and '>' in author %}
+    {{ author.rsplit('<', 1)[1].rstrip('>').strip() }}
+    {% else %}
+    {{ "" }}
+    {% endif %}
+
+github_slug:
+  type: str
+  help: "Enter Github slug in form `<org>/<repo>`:"
+  default: "mozilla-releng/{{ project_slug }}"
+
+github_org:
+  type: str
+  when: false
+  default: "{{ github_slug[:github_slug.find('/')] }}"
+
+github_repo:
+  type: str
+  when: false
+  default: "{{ github_slug[github_slug.find('/') + 1:] }}"
+
+package_name:
+  type: str
+  help: "Enter the Python package name:"
+  default: "{{ project_slug | replace('-', '_') }}"
+
+min_python_version:
+  type: str
+  help: "Enter the minimum Python version (e.g `3.8`):"
+  choices: ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13", "3.14"]
+  default: "3.8"
+
+max_python_version:
+  type: str
+  when: false
+  default: "3.14"
+
+trust_domain:
+  type: str
+  help: "Enter the Taskgraph trust_domain:"
+  default: "mozilla"
+
+trust_project:
+  type: str
+  when: false
+  default: "{{ github_repo }}"
+
+level:
+  type: int
+  help: "Enter the Taskgraph level for branch `main`:"
+  choices: [1, 3]
+  default: 1
+
+secrets_path:
+  type: str
+  when: false
+  default: "project/{{ trust_domain }}/{{ trust_project }}"
+
+codecov_secrets_path:
+  type: str
+  when: false
+  default: "{{ secrets_path }}/level-any/codecov"
+
+# Tasks
+_tasks:
+  - command: "([ ! -d .git ] && git init && git add . && git commit -m 'chore: initial commit using mozilla-releng/reps') || true"
+    when: "{{ project_vcs == 'git' }}"
+  - command: "([ ! -d .jj ] && jj git init --colocate && jj desc -m 'chore: initial commit using mozilla-releng/reps') || true"
+    when: "{{ project_vcs == 'jj' }}"
+  - pre-commit autoupdate
+  - uv lock -U
