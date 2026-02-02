@@ -1,2 +1,0 @@
-.taskcluster.yml @{{cookiecutter.__github_org}}/releng
-taskcluster @{{cookiecutter.__github_org}}/releng

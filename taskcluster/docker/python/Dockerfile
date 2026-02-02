@@ -2,7 +2,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-FROM python:3.9
+FROM python:3.14
 LABEL maintainer="Mozilla Release Engineering <release@mozilla.com>"
 
 VOLUME /builds/worker/checkouts
@@ -22,9 +22,7 @@ ENV SHELL=/bin/bash \
     PATH=/builds/worker/.local/bin:$PATH
 
 # uv
-COPY --from=ghcr.io/astral-sh/uv:0.3.5 /uv /bin/uv
-# %ARG PYTHON_VERSIONS
-RUN uv python install $PYTHON_VERSIONS
+COPY --from=ghcr.io/astral-sh/uv:0.9.28 /uv /bin/uv
 RUN chown -R worker:worker /builds/worker
 
 # Set a default command useful for debugging

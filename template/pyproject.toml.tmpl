@@ -1,0 +1,60 @@
+[project]
+name = "{{ project_slug }}"
+version = "0.1.0"
+description = "{{ short_description }}"
+requires-python = ">={{ min_python_version }}"
+authors = [
+  { name = "{{ author_name }}", email = "{{ author_email }}" }
+]
+classifiers = [
+  "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)",
+]
+readme = "README.md"
+
+[dependency-groups]
+dev = [
+  "coverage",
+  "pyright",
+  "pytest",
+  "pytest-mock",
+  "responses",
+  "sphinx",
+  "sphinx-autobuild",
+  "sphinx-book-theme",
+  "tox",
+]
+
+[tool.pytest.ini_options]
+xfail_strict = true
+
+[tool.coverage.run]
+parallel = true
+branch = true
+source = ["src/{{ package_name }}/"]
+
+[tool.ruff]
+line-length = 88
+
+[tool.ruff.lint]
+select = [
+    "E", "W",       # pycodestyle
+    "F",            # pyflakes
+    "I",            # isort
+    "PLC", "PLE",   # pylint
+    "UP",           # pyupgrade
+    "TCH",          # flake8-type-checking
+]
+ignore = [
+    "E501",  # let ruff-format handle line-length
+]
+
+[tool.ruff.isort]
+known-first-party = ["{{ package_name }}"]
+
+[tool.pyright]
+include = ["src/{{ package_name }}"]
+reportUnknownParameterType = "error"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
