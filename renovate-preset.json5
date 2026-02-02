@@ -9,7 +9,8 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:best-practices"
+    "config:best-practices",
+    ":enablePreCommit"
   ],
   "schedule": [
     // between 00:00 - 06:00 on Thursdays. this lines up with the day we typically do
@@ -52,6 +53,12 @@
       "matchManagers": ["github-actions"],
       "matchUpdateTypes": ["patch", "minor"],
       "groupName": "github actions"
+    },
+    {
+      "matchManagers": ["pre-commit"],
+      "groupName": "pre-commit hooks",
+      // Once a month is enough
+      "schedule": ["* 0-3 1 * *"]
     },
   ],
   // customManagers is where we specify dependency updates for files that renovate doesn't
