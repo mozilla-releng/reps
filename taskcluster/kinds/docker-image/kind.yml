@@ -7,7 +7,4 @@ transforms:
     - taskgraph.transforms.task:transforms
 
 tasks:
-    fetch: {}
-    python:
-        args:
-            PYTHON_VERSIONS: "3.11 3.10 3.9 3.8"
+    python: {}

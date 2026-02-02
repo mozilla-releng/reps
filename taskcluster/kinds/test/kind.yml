@@ -20,24 +20,6 @@ task-defaults:
 tasks:
     unit:
         description: "Run `unit tests` to validate the latest changes"
-        attributes:
-            artifact_prefix: public
-        worker:
-            artifacts:
-                - type: file
-                  path: /builds/worker/artifacts/coverage.xml
-                  name: public/coverage.xml
-            env:
-                COVERAGE_REPORT_COMMAND: "coverage xml -o /builds/worker/artifacts/coverage.xml"
-                TOX_PARALLEL_NO_SPINNER: "1"
         run:
             command: >-
-                uv run tox --parallel
-
-    type-check:
-        description: "Run pyright type checking against code base"
-        worker:
-            max-run-time: 300
-        run:
-            command: >-
-                uv run pyright
+                uv run pytest

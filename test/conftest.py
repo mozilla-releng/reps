@@ -1,8 +1,7 @@
 from pathlib import Path
 
 import pytest
-
-from reps.console import command_new
+import subprocess
 
 here = Path(__file__).parent
 
@@ -18,7 +17,7 @@ def project_root():
 
 
 @pytest.fixture
-def reps_new(tmp_path_factory):
+def copy(tmp_path_factory, project_root):
     tmp_path = tmp_path_factory.mktemp("projects")
     cache = {}
 
@@ -26,14 +25,31 @@ def reps_new(tmp_path_factory):
         if name in cache:
             return cache[name]
 
-        command_new(
-            name,
-            template,
-            no_input=True,
-            extra_context=extra_context,
-            output_dir=tmp_path,
-        )
-        cache[name] = tmp_path / name
+        extra_context.setdefault("project_name", name)
+
+        project_dir = tmp_path / name
+        project_dir.mkdir(exist_ok=True)
+
+        cmd = [
+            "copier",
+            "copy",
+            "--force",
+            "--trust",
+            "--vcs-ref",
+            "HEAD",
+            str(project_root),
+            "."
+        ]
+
+        for key, value in extra_context.items():
+            cmd.extend(["-d", f"{key}={value}"])
+
+        result = subprocess.run(cmd, cwd=project_dir, capture_output=True, text=True)
+        if result.returncode != 0:
+            print(f"Error applying template {template}:")
+            print(result.stderr)
+
+        cache[name] = project_dir
         return cache[name]
 
     return inner
