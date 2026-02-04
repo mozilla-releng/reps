@@ -3,9 +3,16 @@
 // repos without JS code). Nevertheless, it's preferable to have One True Config that we
 // can easily copy/paste everywhere.
 //
-// The source of truth for this configuration is in
-// https://github.com/mozilla-releng/renovate-config.
-// This repository also contains a list of all of the places it should be copied when updated.
+// To use this configuration in a new repository, run:
+//
+//   $ cat << EOF >> renovate.json
+//   {
+//    "\$schema": "https://docs.renovatebot.com/renovate-schema.json",
+//    "extends": [
+//      "github>mozilla-releng/reps:renovate-preset.json5"
+//    ]
+//   }
+//   EOF
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
