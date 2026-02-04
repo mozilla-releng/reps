@@ -52,13 +52,13 @@
     // want to do by hand
     {
       "matchManagers": ["dockerfile", "docker-compose"],
-      "matchUpdateTypes": ["patch", "minor"],
+      "matchUpdateTypes": ["digest", "patch", "minor"],
       "groupName": "docker dependencies"
     },
     // group all non-major github action bumps together
     {
       "matchManagers": ["github-actions"],
-      "matchUpdateTypes": ["patch", "minor"],
+      "matchUpdateTypes": ["digest", "patch", "minor"],
       "groupName": "github actions"
     },
     {
