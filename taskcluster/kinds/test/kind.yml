@@ -2,6 +2,7 @@
 loader: taskgraph.loader.transform:loader
 
 transforms:
+    - taskgraph.transforms.matrix
     - taskgraph.transforms.run:transforms
     - taskgraph.transforms.task:transforms
 
@@ -19,7 +20,14 @@ task-defaults:
 
 tasks:
     unit:
-        description: "Run `unit tests` to validate the latest changes"
+        matrix:
+            set-name: "unit-py{matrix[python]}"
+            substitution-fields: [description, run.command, worker, attributes]
+            python: ["3.14", "3.13", "3.12", "3.11", "3.10"]
+        description: "Run unit tests with py{matrix[python]}"
+        worker:
+            env:
+                UV_PYTHON: "{matrix[python]}"
         run:
             command: >-
                 uv run pytest

@@ -1,0 +1,19 @@
+---
+loader: taskgraph.loader.transform:loader
+
+transforms:
+    - taskgraph.transforms.from_deps
+    - taskgraph.transforms.task
+
+kind-dependencies:
+    - test
+
+tasks:
+    pr:
+        description: Ensures required PR tasks have completed
+        run-on-tasks-for: ["github-pull-request", "github-pull-request-untrusted"]
+        worker-type: succeed
+        from-deps:
+            group-by: all
+            set-name: false
+            unique-kinds: false
