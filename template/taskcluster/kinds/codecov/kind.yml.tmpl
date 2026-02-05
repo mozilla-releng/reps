@@ -5,8 +5,9 @@
 loader: taskgraph.loader.transform:loader
 
 transforms:
-    - taskgraph.transforms.run:transforms
-    - taskgraph.transforms.task:transforms
+    - taskgraph.transforms.from_deps
+    - taskgraph.transforms.run
+    - taskgraph.transforms.task
 
 kind-dependencies:
     - fetch
@@ -15,24 +16,36 @@ kind-dependencies:
 tasks:
     upload:
         description: "Upload coverage.xml to codecov.io"
-        worker-type: linux
+        from-deps:
+            kinds: [test]
+            group-by: all
+            unique-kinds: false
+            set-name: null
+            fetches:
+                test:
+                    - artifact: coverage.py{matrix[python]}
+        worker-type: t-linux
         worker:
             docker-image: {in-tree: python}
-            max-run-time: 600
+            max-run-time: 1800
             env:
                 MOZ_FETCHES_DIR: /builds/worker/fetches
+        treeherder:
+            kind: test
+            platform: tests/opt
+            tier: 1
+            symbol: codecov
         scopes:
             - secrets:get:{{ codecov_secrets_path }}
-        dependencies:
-            test: test-unit
         fetches:
             fetch:
                 - codecov-uploader
-            test:
-                - coverage.xml
         run-on-tasks-for: ["github-push", "github-pull-request"]
         run:
             using: run-task
             cwd: '{checkout}'
+            use-caches: [checkout, uv]
             command: >-
+                uv run coverage combine --data-file $MOZ_FETCHES_DIR/coverage $MOZ_FETCHES_DIR &&
+                uv run coverage xml --data-file $MOZ_FETCHES_DIR/coverage -o $MOZ_FETCHES_DIR/coverage.xml &&
                 uv run python taskcluster/scripts/codecov-upload.py
