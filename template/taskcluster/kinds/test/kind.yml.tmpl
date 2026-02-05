@@ -1,0 +1,54 @@
+{%- set pylist -%}
+{%- for i in range(max_python_version.replace('.', '')[1:] | int, min_python_version.replace('.', '')[1:] | int - 1, -1) -%}
+"3{{i}}"
+{%- if not loop.last %}, {% endif -%}
+{%- endfor -%}
+{%- endset -%}
+---
+loader: taskgraph.loader.transform:loader
+
+transforms:
+    - taskgraph.transforms.matrix
+    - taskgraph.transforms.run:transforms
+    - taskgraph.transforms.task:transforms
+
+task-defaults:
+    attributes:
+        retrigger: true
+    worker-type: linux
+    worker:
+        docker-image: {in-tree: python}
+        max-run-time: 1800
+    run:
+        using: run-task
+        cwd: '{checkout}'
+        use-caches: ["checkout", "uv"] 
+
+tasks:
+    unit:
+        matrix:
+            set-name: "unit-py{matrix[python]}"
+            substitution-fields: [description, run.command, treeherder, worker, attributes]
+            python: [{{ pylist }}]
+        description: "Run unit tests with py{matrix[python]}"
+        attributes:
+            artifact_prefix: public
+            python: "{matrix[python]}"
+        worker:
+            artifacts:
+                - type: file
+                  path: /builds/worker/artifacts/coverage
+                  name: "public/coverage.py{matrix[python]}"
+            env:
+                UV_PYTHON: "{matrix[python]}"
+        run:
+            command: >-
+                uv run coverage run --data-file /builds/worker/artifacts/coverage --context=py{matrix[python]} -m pytest -vv
+
+    type-check:
+        description: "Run pyright type checking against code base"
+        worker:
+            max-run-time: 300
+        run:
+            command: >-
+                uv run pyright
