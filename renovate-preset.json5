@@ -32,6 +32,12 @@
   // packageRules is where we specify dependency updates for file and package types that
   // are supported out-of-box
   "packageRules": [
+    // handle python docker images with python versioning, i.e. minor updates are breaking
+    {
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["python"],
+      "versioning": "python"
+    },
     // group all non-breaking python dependencies together
     // major dependency bumps will bypass this, and each get their own PR
     {
