@@ -21,8 +21,7 @@ ENV SHELL=/bin/bash \
     HOME=/builds/worker \
     PATH=/builds/worker/.local/bin:$PATH
 
-# %ARG UV_VERSION
-COPY --from=ghcr.io/astral-sh/uv:$UV_VERSION /uv /bin/uv
+COPY --from=ghcr.io/astral-sh/uv:0.9.30 /uv /bin/uv
 
 # %ARG PYTHON_VERSIONS
 RUN uv python install $PYTHON_VERSIONS
