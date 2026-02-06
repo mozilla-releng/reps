@@ -472,7 +472,7 @@ type-check:
     run:
         using: run-task
         cwd: '{checkout}'
-        cache-dotcache: true
+        use-caches: [checkout, uv]
         command: >-
             uv run pyright
 ```
