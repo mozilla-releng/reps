@@ -108,9 +108,18 @@ codecov_secrets_path:
 
 # Tasks
 _tasks:
-  - command: "([ ! -d .git ] && git init && git add . && git commit -m 'chore: initial commit using mozilla-releng/reps') || true"
+  - command: >-
+      ([ ! -d .git ] &&
+       git init &&
+       git add . &&
+       git commit -m 'chore: initial commit using mozilla-releng/reps'
+      ) || true"
     when: "{{ project_vcs == 'git' }}"
-  - command: "([ ! -d .jj ] && jj git init --colocate && jj desc -m 'chore: initial commit using mozilla-releng/reps') || true"
+  - command: >-
+      ([ ! -d .jj ] &&
+       jj git init --colocate &&
+       jj desc -m 'chore: initial commit using mozilla-releng/reps'
+      ) || true"
     when: "{{ project_vcs == 'jj' }}"
   - pre-commit autoupdate
   - uv lock -U
