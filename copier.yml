@@ -108,18 +108,21 @@ codecov_secrets_path:
 
 # Tasks
 _tasks:
-  - command: >-
+  - when: "{{ project_vcs == 'git' }}"
+    command: >-
       ([ ! -d .git ] &&
        git init &&
        git add . &&
-       git commit -m 'chore: initial commit using mozilla-releng/reps'
-      ) || true"
-    when: "{{ project_vcs == 'git' }}"
-  - command: >-
+       git commit -m 'chore: initial commit using mozilla-releng/reps' &&
+       git remote add origin https://github.com/{{ github_slug }}.git &&
+       git remote set-url origin --push git@github.com:{{ github_slug }}.git
+      ) || true
+  - when: "{{ project_vcs == 'jj' }}"
+    command: >-
       ([ ! -d .jj ] &&
        jj git init --colocate &&
-       jj desc -m 'chore: initial commit using mozilla-releng/reps'
-      ) || true"
-    when: "{{ project_vcs == 'jj' }}"
+       jj desc -m 'chore: initial commit using mozilla-releng/reps' &&
+       jj git remote add origin https://github.com/{{ github_slug }}.git --push-url git@github.com:{{ github_slug }}.git
+      ) || true
   - pre-commit autoupdate
   - uv lock -U
