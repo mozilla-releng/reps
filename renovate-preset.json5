@@ -82,8 +82,8 @@
   // package.json / pyproject.toml.
   "lockFileMaintenance": {
     "enabled": true,
-    "branchTopic": "lock-file-maintenance-{{packageFile}}",
-    "commitMessageExtra": "({{packageFile}})"
+    "branchTopic": "lock-file-maintenance-{{manager}}",
+    "commitMessageExtra": "({{manager}})"
   },
   // customManagers is where we specify dependency updates for files that renovate doesn't
   // know how to parse out-of-box
