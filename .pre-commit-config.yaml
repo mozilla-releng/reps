@@ -23,7 +23,7 @@ repos:
             id: ruff
           - id: ruff-format
       repo: https://github.com/charliermarsh/ruff-pre-commit
-      rev: v0.14.14
+      rev: v0.15.0
 exclude: |
   (?x)^(
     template
