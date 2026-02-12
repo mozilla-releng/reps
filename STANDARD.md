@@ -106,26 +106,22 @@ autoCancelPreviousChecks: true
 [Firefox-CI Taskcluster instance]: https://firefox-ci-tc.services.mozilla.com/
 [Taskgraph]: https://github.com/taskcluster/taskgraph
 
-#### pre-commit.ci
+#### Github Actions
 
-Pre-commit has its own CI called [pre-commit.ci]. This can be used instead of
-Taskcluster because its workers share caches across all pre-commit users, so
-tool checkouts are always hot and tasks run extremely fast.
+##### Pre-commit Action
 
-It also provides useful Github integrations to automatically version bump tools
-and automatically create fix-up commits on pull requests.
+Releng hosts shared Github actions under `mozilla-releng/actions`. The
+`pre-commit` action can be used instead of Taskcluster as it's simpler to
+share.
 
-The [pre-commit Github integration] should be enabled, and the following
-configuration should be added to `.pre-commit-config.yaml`:
+##### CodeQL Action
 
-```yaml
-ci:
-  autofix_commit_msg: "style: pre-commit.ci auto fixes [...]"
-  autoupdate_comit_msg: "chore: pre-commit autoupdate"
-```
+Github offers free vulnerability scanning for public repos via [CodeQL].
 
-[pre-commit.ci]: https://pre-commit.ci/
-[pre-commit Github integration]: https://github.com/apps/pre-commit-ci
+The [default setup] should be enabled and run via Github Actions.
+
+[CodeQL]: https://codeql.github.com/
+[default setup]: https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning-for-a-repository#configuring-code-scanning-automatically
 
 #### CodeCov.io
 
@@ -138,15 +134,6 @@ block PRs from landing), but used as a nudge to improve test coverage.
 
 [CodeCov.io]: http://codecov.io
 [codecov.io Github integration]: https://github.com/apps/codecov
-
-#### CodeQL
-
-Github offers free vulnerability scanning for public repos via [CodeQL].
-
-The [default setup] should be enabled and run via Github Actions.
-
-[CodeQL]: https://codeql.github.com/
-[default setup]: https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning-for-a-repository#configuring-code-scanning-automatically
 
 #### Renovate
 
