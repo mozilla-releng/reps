@@ -279,6 +279,18 @@ Projects should use [uv] to manage dependencies, virtualenvs and publish
 packages. Running `uv init` should be sufficient to generate the initial
 configuration in the top-level `pyproject.toml` file.
 
+Additionally the `uv-pre-commit` hook should be configured to ensure `uv.lock`
+gets updated whenever dependencies change:
+
+```yaml
+repos:
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    rev: 0.10.2
+    hooks:
+      - id: uv-lock
+
+```
+
 [uv]: https://docs.astral.sh/uv/
 
 ### Testing
