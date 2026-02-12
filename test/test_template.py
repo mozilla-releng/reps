@@ -14,6 +14,7 @@ def test_generated_files(project_path):
         ".copier-answers.yml",
         ".github/CODEOWNERS",
         ".github/workflows/codeql-analysis.yml",
+        ".github/workflows/pre-commit.yml",
         ".gitignore",
         ".pre-commit-config.yaml",
         ".taskcluster.yml",
