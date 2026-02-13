@@ -1,4 +1,4 @@
-FROM debian:11
+FROM debian:12-slim
 
 ### Add worker user and setup its workspace.
 RUN mkdir /builds && \
