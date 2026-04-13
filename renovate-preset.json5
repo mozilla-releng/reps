@@ -83,7 +83,8 @@
   "lockFileMaintenance": {
     "enabled": true,
     "branchTopic": "lock-file-maintenance-{{manager}}",
-    "commitMessageExtra": "({{manager}})"
+    "commitMessageExtra": "({{manager}})",
+    "rebaseWhen": "behind-base-branch"
   },
   // customManagers is where we specify dependency updates for files that renovate doesn't
   // know how to parse out-of-box
