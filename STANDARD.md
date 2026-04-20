@@ -56,11 +56,13 @@ repos:
     - id: end-of-file-fixer
     - id: check-yaml
     - id: check-added-large-files
+    - id: check-merge-conflict
+      args: [--assume-in-merge]
   - repo: https://github.com/codespell-project/codespell
     rev: v2.2.4
     hooks:
     - id: codespell
-        entry: codespell -I .codespell-ignore-words.txt
+      entry: codespell -I .codespell-ignore-words.txt
 ```
 
 Run `pre-commit autoupdate` to update tools to their latest versions.
