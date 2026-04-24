@@ -43,14 +43,14 @@
     {
       "matchManagers": ["pep621"],
       "matchUpdateTypes": ["patch", "minor"],
-      "matchJsonata": ["isBreaking != true"],
+      "matchJsonata": ["$not(isBreaking = true)"],
       "groupName": "python dependencies"
     },
     // group all non-breaking JS dependencies together
     {
       "matchManagers": ["npm"],
       "matchUpdateTypes": ["patch", "minor"],
-      "matchJsonata": ["isBreaking != true"],
+      "matchJsonata": ["$not(isBreaking = true)"],
       "groupName": "js dependencies"
     },
     // group all non-breaking docker-related files together, as much as possible anyways
@@ -61,14 +61,14 @@
     {
       "matchManagers": ["dockerfile", "docker-compose"],
       "matchUpdateTypes": ["digest", "patch", "minor"],
-      "matchJsonata": ["isBreaking != true"],
+      "matchJsonata": ["$not(isBreaking = true)"],
       "groupName": "docker dependencies"
     },
     // group all non-breaking github action bumps together
     {
       "matchManagers": ["github-actions"],
       "matchUpdateTypes": ["digest", "patch", "minor"],
-      "matchJsonata": ["isBreaking != true"],
+      "matchJsonata": ["$not(isBreaking = true)"],
       "groupName": "github actions"
     },
     {
