@@ -20,9 +20,8 @@
     ":enablePreCommit"
   ],
   "schedule": [
-    // between 00:00 - 06:00 on Thursdays. this lines up with the day we typically do
-    // staging deploys
-    "* 0-6 * * 4"
+    // schedule updates at 0200 UTC on the first of the month
+    "* 2 1 * *"
   ],
   // this is the default, but let's be explicit about it
   "timezone": "UTC",
@@ -70,12 +69,14 @@
       "matchUpdateTypes": ["digest", "patch", "minor"],
       "matchJsonata": ["$not(isBreaking = true)"],
       "groupName": "github actions"
+      // Once a month is enough
+      "schedule": ["* 2 1 * *"]
     },
     {
       "matchManagers": ["pre-commit"],
       "groupName": "pre-commit hooks",
       // Once a month is enough
-      "schedule": ["* 0-3 1 * *"]
+      "schedule": ["* 2 1 * *"]
     },
   ],
   // Refresh lock files to update dependencies that aren't directly pinned in
