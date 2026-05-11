@@ -1,0 +1,16 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "local:renovate-preset"
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "datasourceTemplate": "npm",
+      "managerFilePatterns": ["taskcluster/docker/node/Dockerfile"],
+      "matchStrings": [
+        "npm install -g (?<depName>\\S+?)@(?<currentValue>[^\\s\\\\]+)"
+      ]
+    }
+  ]
+}

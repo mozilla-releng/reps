@@ -23,3 +23,12 @@ tasks:
         run:
             command: >-
                 uv run pytest
+
+    renovate-config:
+        description: "Validate the shared renovate template using renovate-config-validator"
+        worker:
+            docker-image: {in-tree: node}
+        run:
+            use-caches: [checkout]
+            command: >-
+                renovate-config-validator renovate-preset.json5
