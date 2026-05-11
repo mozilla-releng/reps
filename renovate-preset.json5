@@ -68,7 +68,7 @@
       "matchManagers": ["github-actions"],
       "matchUpdateTypes": ["digest", "patch", "minor"],
       "matchJsonata": ["$not(isBreaking = true)"],
-      "groupName": "github actions"
+      "groupName": "github actions",
       // Once a month is enough
       "schedule": ["* 2 1 * *"]
     },
