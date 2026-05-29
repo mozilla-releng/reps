@@ -8,6 +8,8 @@ version: 1
 reporting: checks-v1
 policy:
     pullRequests: public_restricted
+hooks:
+    - name: lint/pre-commit-v1
 tasks:
     - $let:
           trustDomain: "mozilla"

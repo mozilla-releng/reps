@@ -9,6 +9,8 @@ reporting: checks-v1
 autoCancelPreviousChecks: true
 policy:
     pullRequests: public_restricted
+hooks:
+    - name: lint/pre-commit-v1
 tasks:
     - $let:
           trustDomain: "{{ trust_domain }}"
