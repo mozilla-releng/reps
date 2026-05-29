@@ -105,16 +105,23 @@ root `.taskcluster.yml`:
 autoCancelPreviousChecks: true
 ```
 
+#### Shared Hooks
+
+The following shared Taskcluster hooks should be enabled.
+
+##### lint/pre-commit-v1
+
+This hook runs pre-commit. Enable it in `.taskcluster.yml`:
+
+```yaml
+hooks:
+  - name: lint/pre-commit-v1
+```
+
 [Firefox-CI Taskcluster instance]: https://firefox-ci-tc.services.mozilla.com/
 [Taskgraph]: https://github.com/taskcluster/taskgraph
 
 #### Github Actions
-
-##### Pre-commit Action
-
-Releng hosts shared Github actions under `mozilla-releng/actions`. The
-`pre-commit` action can be used instead of Taskcluster as it's simpler to
-share.
 
 ##### CodeQL Action
 
