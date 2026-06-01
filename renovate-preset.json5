@@ -20,8 +20,13 @@
     ":enablePreCommit"
   ],
   "schedule": [
-    // schedule updates at 0200 UTC on the first of the month
-    "* 2 1 * *"
+    // schedule updates on the first of the month
+    // we explicitly avoid specifying an hour here because we can't control
+    // when the renovate bot runs. if it runs at an hour outside of our
+    // specified schedule (eg: if we say only at 5am), no PRs will be created
+    // see https://docs.renovatebot.com/key-concepts/scheduling/#global-schedule-vs-specific-schedule
+    // for more
+    "* * 1 * *"
   ],
   // this is the default, but let's be explicit about it
   "timezone": "UTC",
@@ -69,14 +74,10 @@
       "matchUpdateTypes": ["digest", "patch", "minor"],
       "matchJsonata": ["$not(isBreaking = true)"],
       "groupName": "github actions",
-      // Once a month is enough
-      "schedule": ["* 2 1 * *"]
     },
     {
       "matchManagers": ["pre-commit"],
       "groupName": "pre-commit hooks",
-      // Once a month is enough
-      "schedule": ["* 2 1 * *"]
     },
   ],
   // Refresh lock files to update dependencies that aren't directly pinned in
