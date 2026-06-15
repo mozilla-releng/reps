@@ -1,7 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "local:renovate-preset"
+    "local>mozilla-releng/reps:renovate-preset"
   ],
   "customManagers": [
     {
