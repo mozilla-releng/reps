@@ -86,7 +86,12 @@
     "enabled": true,
     "branchTopic": "lock-file-maintenance-{{manager}}",
     "commitMessageExtra": "({{manager}})",
-    "rebaseWhen": "behind-base-branch"
+    "rebaseWhen": "behind-base-branch",
+    "schedule": [
+      // should be kept in sync with the main schedule
+      // (lockFileMaintenance doesn't obey that...it defaults to "before 4am on monday")
+      "* * 1 * *"
+    ]
   },
   // customManagers is where we specify dependency updates for files that renovate doesn't
   // know how to parse out-of-box
