@@ -22,7 +22,7 @@ ENV SHELL=/bin/bash \
     PATH=/builds/worker/.local/bin:$PATH
 
 # uv
-COPY --from=ghcr.io/astral-sh/uv:0.9.28 /uv /bin/uv
+COPY --from=ghcr.io/astral-sh/uv:0.11.21@sha256:ff07b86af50d4d9391d9daf4ff89ce427bc544f9aae87057e69a1cc0aa369946 /uv /bin/uv
 RUN chown -R worker:worker /builds/worker
 
 # Set a default command useful for debugging
