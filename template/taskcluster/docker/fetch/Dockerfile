@@ -1,4 +1,4 @@
-FROM debian:11
+FROM debian:bullseye-20260610@sha256:68cf0d859b046494f3c4288171bc477580e424f981d08f2a77742b982c32a38f
 
 ### Add worker user and setup its workspace.
 RUN mkdir /builds && \
