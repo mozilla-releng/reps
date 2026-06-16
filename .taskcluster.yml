@@ -7,7 +7,7 @@
 version: 1
 reporting: checks-v1
 policy:
-    pullRequests: public_restricted
+    pullRequests: public
 hooks:
     - name: lint/pre-commit-v1
 tasks:
@@ -31,7 +31,7 @@ tasks:
           project:
               $switch:
                   'tasks_for == "github-push"': '${event.repository.name}'
-                  'tasks_for[:19] == "github-pull-request"': '${event.pull_request.head.repo.name}'
+                  'tasks_for[:19] == "github-pull-request"': '${event.pull_request.base.repo.name}'
                   'tasks_for in ["cron", "action"]': '${repository.project}'
           head_branch:
               $switch:
