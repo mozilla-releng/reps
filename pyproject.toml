@@ -2,7 +2,7 @@
 name = "reps-new"
 version = "0.4.0"
 description = "Mozilla Release Engineering Project Standard"
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 authors = [
   { name = "Mozilla Release Engineering", email = "release+reps@mozilla.com" }
 ]
