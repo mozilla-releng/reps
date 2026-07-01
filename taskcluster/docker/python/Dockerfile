@@ -2,7 +2,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-FROM python:3.14@sha256:6f473f84b09fccf411d4875e19e9e2796b59d6b3c722463d2963384a43e59f39
+FROM python:3.14@sha256:09b29c360b84742bf98eba40b214f7f6b4b53286bb2c8a8b5b1afa188a8d9c0e
 LABEL maintainer="Mozilla Release Engineering <release@mozilla.com>"
 
 VOLUME /builds/worker/checkouts
@@ -22,7 +22,7 @@ ENV SHELL=/bin/bash \
     PATH=/builds/worker/.local/bin:$PATH
 
 # uv
-COPY --from=ghcr.io/astral-sh/uv:0.11.21@sha256:ff07b86af50d4d9391d9daf4ff89ce427bc544f9aae87057e69a1cc0aa369946 /uv /bin/uv
+COPY --from=ghcr.io/astral-sh/uv:0.11.26@sha256:3d868e555f8f1dbc324afa005066cd11e1053fc4743b9808ca8025283e65efa5 /uv /bin/uv
 RUN chown -R worker:worker /builds/worker
 
 # Set a default command useful for debugging
