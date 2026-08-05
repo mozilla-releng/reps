@@ -1,7 +1,7 @@
+import subprocess
 from pathlib import Path
 
 import pytest
-import subprocess
 
 here = Path(__file__).parent
 
@@ -44,7 +44,9 @@ def copy(tmp_path_factory, project_root):
         for key, value in extra_context.items():
             cmd.extend(["-d", f"{key}={value}"])
 
-        result = subprocess.run(cmd, cwd=project_dir, capture_output=True, text=True)
+        result = subprocess.run(
+            cmd, cwd=project_dir, capture_output=True, text=True, check=False
+        )
         if result.returncode != 0:
             print("Error copying template:")
             print(result.stderr)
