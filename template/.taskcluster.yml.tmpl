@@ -88,7 +88,7 @@ tasks:
               level:
                   $if: >
                       repoUrl == "https://github.com/{{ github_slug }}" && (
-                      tasks_for in [""cron", "action"] ||
+                      tasks_for in ["cron", "action"] ||
                       (tasks_for == "github-push" && head_branch == "refs/head/main"))
                   then: {{ level }}
                   else: 1
