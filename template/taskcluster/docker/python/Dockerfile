@@ -2,7 +2,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-FROM python:3.14@sha256:51570a50616289f78f340811c34ca4384985f9e891819cbe7620f738d6ca8525
+FROM debian:13-slim@sha256:3a39a0592364683e6bab97937b72cad5a8fa6dcbbee90edb3bb48c7f8e94f258
 LABEL maintainer="Mozilla Release Engineering <release@mozilla.com>"
 
 VOLUME /builds/worker/checkouts
@@ -14,8 +14,12 @@ RUN useradd -d /builds/worker -s /bin/bash -m worker && \
 
 # %include-run-task
 
-RUN apt-get update && apt-get install -y --force-yes --no-install-recommends \
-    mercurial build-essential zlib1g-dev libssl-dev git
+RUN apt-get update \
+ && apt-get install -y --force-yes --no-install-recommends \
+    ca-certificates \
+    build-essential \
+    git \
+    python3
 
 ENV SHELL=/bin/bash \
     HOME=/builds/worker \
