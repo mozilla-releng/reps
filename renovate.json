@@ -11,6 +11,21 @@
       "matchStrings": [
         "npm install -g (?<depName>\\S+?)@(?<currentValue>[^\\s\\\\]+)"
       ]
+    },
+    {
+      "customType": "regex",
+      "datasourceTemplate": "docker",
+      "managerFilePatterns": ["template/.taskcluster.yml.tmpl"],
+      "matchStrings": [
+        "image: (?<depName>\\S+):(?<currentValue>decision-\\S+)@(?<currentDigest>\\S+)"
+      ],
+      "versioningTemplate": "regex:^decision-v(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$"
+    }
+  ],
+  "packageRules": [
+    {
+      "matchFileNames": ["template/**"],
+      "commitMessage": "fix(deps): update pins in template"
     }
   ]
 }
