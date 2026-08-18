@@ -60,6 +60,13 @@
       "matchJsonata": ["$not(isBreaking = true)"],
       "groupName": "js dependencies"
     },
+    // babel publishes its packages in lockstep; group them across all update
+    // types (including majors) so one package doesn't bump ahead of its siblings
+    {
+      "matchManagers": ["npm"],
+      "matchPackageNames": ["@babel/**"],
+      "groupName": "babel"
+    },
     // group all non-breaking docker-related files together, as much as possible anyways
     // some Dockerfiles have an argument, eg: `PYTHON_VERSION` in their `FROM`
     // statements, which will not be handled here. we could, theoretically,
