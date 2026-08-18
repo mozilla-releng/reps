@@ -1,6 +1,6 @@
 [project]
 name = "reps-new"
-version = "0.4.0"
+version = "0.5.0"
 description = "Mozilla Release Engineering Project Standard"
 requires-python = ">=3.10"
 authors = [

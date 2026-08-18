@@ -1,3 +1,67 @@
+## 0.5.0 (2026-08-18)
+
+### Feat
+
+- use matrix transforms to handle many Python versions
+- switch pull request policy to public (#108)
+- use shared hook to run pre-commit
+- enable 'check-merge-conflict' pre-commit hook
+
+### Fix
+
+- codecov task worker-type
+- extra quote in .taskcluster.yml
+- stop using variable for UV_VERSION
+- use debian-slim as base for fetch image
+- indentation in .taskcluster.yml
+- use proper decision worker pool
+- use base repo when finding project name for pull requests (#109)
+- renovate.json configuration (round 2) (#96)
+- change lockFileMaintenance schedule to match main schedule (#95)
+- renovate preset syntax (#94)
+- **bug 2043228**: allow renovate PRs to be created at any hour (#92)
+- invalid json in renovate config
+
+## 0.4.1 (2026-02-17)
+
+### Feat
+
+- add 'uv-pre-commit' hook to template
+
+### Fix
+
+- use 'pre-commit' Github action instead of pre-commit.ci
+- automatically set up origin remote
+- add pyright to dev dependencies
+
+### Refactor
+
+- copier vcs commands for legibility
+
+## 0.4.0 (2026-02-09)
+
+### Feat
+
+- pin to Taskgraph 18.1.0
+- switch from cookiecutter to copier
+- **renovate**: group github action updates together (#65)
+- **renovate**: don't group major updates for JS and docker updates together (#63)
+- add renovatebot support (#62)
+- **python**: switch Python spec from poetry to uv
+- **python**: switch from black to ruff-format for formatting
+- add type checking with Pyright to the standard
+
+### Fix
+
+- update python Dockerfile
+- ensure Decision task works with `taskgraph-decision` image
+- include digest only updates in Docker and GH Action groupings
+- remove unused 'ci' section from .pre-commit-config.yaml
+- **python**: update template for Taskgraph 7+
+- **python**: set pre-commit autoupdate schedule to monthly
+- **dependencies**: py38 upstream dependencies and relock packages (#35)
+- **python**: typo in .pre-commit-config.yaml
+
 ## 0.3.6 (2023-11-21)
 
 ### Fix
