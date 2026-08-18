@@ -1484,7 +1484,7 @@ wheels = [
 
 [[package]]
 name = "reps-new"
-version = "0.4.0"
+version = "0.5.0"
 source = { editable = "." }
 dependencies = [
     { name = "pre-commit" },
