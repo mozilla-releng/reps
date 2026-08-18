@@ -30,6 +30,9 @@
   ],
   // this is the default, but let's be explicit about it
   "timezone": "UTC",
+  // default is 10; raised to reduce how often updates get stuck in the
+  // "Rate-Limited" section of the dependency dashboard
+  "prConcurrentLimit": 20,
   // remove automatic grouping; this allows us to group, eg: all frontend dependencies together in
   // one PR (and more generally, be in control of how grouping happens)
   "ignorePresets": ["group:monorepos", "group:recommended"],
