@@ -25,7 +25,7 @@
   "packageRules": [
     {
       "matchFileNames": ["template/**"],
-      "commitMessage": "fix(deps): update pins in template"
+      "semanticCommitType": "fix"
     }
   ]
 }
