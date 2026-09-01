@@ -30,6 +30,9 @@
   ],
   // this is the default, but let's be explicit about it
   "timezone": "UTC",
+  // only propose updates to releases that have been out for at least this
+  // long, to help avoid regressions before they're detected by the community
+  "minimumReleaseAge": "3 days",
   // default is 10; raised to reduce how often updates get stuck in the
   // "Rate-Limited" section of the dependency dashboard
   "prConcurrentLimit": 20,
