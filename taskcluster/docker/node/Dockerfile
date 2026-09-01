@@ -19,7 +19,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git ca-certificates python3 && \
     rm -rf /var/lib/apt/lists/*
 
-RUN npm install -g renovate@44.4.5
+RUN npm install -g renovate@44.51.0
 
 ENV HOME=/builds/worker \
     PATH=/builds/worker/.local/bin:$PATH
