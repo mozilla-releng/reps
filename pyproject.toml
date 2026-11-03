@@ -26,7 +26,7 @@ Issues = "https://github.com/mozilla-releng/reps/issues"
 dev = [
   "copier",
   "pre-commit",
-  "pyright",
+  "pyright[nodejs]",
   "pytest",
   "requests",
   "uv",
