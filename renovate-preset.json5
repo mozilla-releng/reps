@@ -48,6 +48,14 @@
       "matchPackageNames": ["python"],
       "versioning": "python"
     },
+    // GHCR doesn't provide release timestamps, so with the default
+    // minimumReleaseAgeBehaviour (timestamp-required) minimumReleaseAge would
+    // hold these updates forever
+    {
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["ghcr.io/**"],
+      "minimumReleaseAgeBehaviour": "timestamp-optional"
+    },
     // group all non-breaking python dependencies together
     // major dependency bumps will bypass this, and each get their own PR
     {
