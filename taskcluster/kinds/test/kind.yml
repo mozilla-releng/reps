@@ -23,7 +23,7 @@ tasks:
         matrix:
             set-name: "unit-py{matrix[python]}"
             substitution-fields: [description, run.command, worker, attributes]
-            python: ["3.14", "3.13", "3.12", "3.11", "3.10"]
+            python: ["3.14", "3.13", "3.12", "3.11"]
         description: "Run unit tests with py{matrix[python]}"
         worker:
             env:
