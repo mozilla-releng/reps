@@ -72,13 +72,13 @@ package_name:
 min_python_version:
   type: str
   help: "Enter the minimum Python version (e.g `3.11`):"
-  choices: ["3.11", "3.12", "3.13", "3.14"]
+  choices: ["3.11", "3.12", "3.13", "3.14", "3.15"]
   default: "3.11"
 
 max_python_version:
   type: str
   when: false
-  default: "3.14"
+  default: "3.15"
 
 trust_domain:
   type: str
