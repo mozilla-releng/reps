@@ -42,11 +42,22 @@
   // packageRules is where we specify dependency updates for file and package types that
   // are supported out-of-box
   "packageRules": [
-    // handle python docker images with python versioning, i.e. minor updates are breaking
+    // handle python docker images with python versioning, i.e. minor updates are breaking.
+    // Docker Hub only exposes "last pushed" timestamps and official images get rebuilt
+    // every few days, so minimumReleaseAge would just make the proposed version flap.
     {
       "matchDatasources": ["docker"],
       "matchPackageNames": ["python"],
-      "versioning": "python"
+      "versioning": "python",
+      "minimumReleaseAge": null,
+    },
+    // python versioning makes the title show the full release (eg: v3.15.2) even when
+    // the tag being bumped is shorter (eg: 3.15); show the value actually written instead
+    {
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["python"],
+      "matchUpdateTypes": ["major", "minor", "patch"],
+      "commitMessageExtra": "to {{{newValue}}}",
     },
     // GHCR doesn't provide release timestamps, so with the default
     // minimumReleaseAgeBehaviour (timestamp-required) minimumReleaseAge would
